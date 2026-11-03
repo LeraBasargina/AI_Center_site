@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сахалинский центр ИИ — компьютерное зрение, предиктивная аналитика и геонавигация</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5.2.5/cyrillic-400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5.2.5/cyrillic-500.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5.2.5/cyrillic-600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5.2.5/cyrillic-700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5.2.5/cyrillic-800.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5.2.5/latin-400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5.2.5/latin-700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/manrope@5.2.5/latin-800.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.2.5/cyrillic-400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.2.5/cyrillic-700.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.2.5/latin-400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.2.5/latin-700.css">
+<style>
+/* ============ СВЕТЛАЯ ТЕМА ============ */
+:root,[data-theme="light"]{
+  --bg:#eef2f7; --panel:#ffffff; --panel2:#f5f8fc; --soft:#f7fafd; --viz:#fbfdff;
+  --line:rgba(16,42,72,.14); --line2:rgba(16,42,72,.08);
+  --txt:#0d1b2a; --txt2:#22384f; --muted:#55677d; --faint:#5c6e82;
+  --cyan:#0f9b8e; --cyan-d:#0b7f74; --cyan2:#2b7fd4; --amber:#c2740a; --amber-l:#e2940a;
+  --red:#c8382f; --violet:#7c4dcc; --green:#0f8a4f;
+  --ok-fg:#0b7f74; --ok-bg:rgba(15,155,142,.11); --ok-bd:rgba(15,155,142,.45); --ok-solid:#0f9b8e;
+  --warn-fg:#8f5300; --warn-bg:rgba(226,148,10,.13); --warn-bd:rgba(226,148,10,.5); --warn-solid:#d98207;
+  --bad-fg:#a32b23; --bad-bg:rgba(200,56,47,.11); --bad-bd:rgba(200,56,47,.5); --bad-solid:#c8382f;
+  --hdr:rgba(255,255,255,.88); --foot:#e7edf4;
+  --body-g1:rgba(15,155,142,.10); --body-g2:rgba(43,127,212,.09);
+  --blk-a:#ffffff; --blk-b:#f2f7fb; --blk-g1:rgba(226,148,10,.13); --blk-g2:rgba(43,127,212,.09);
+  --sh:0 1px 2px rgba(13,27,42,.05), 0 10px 28px rgba(13,27,42,.06);
+  --gauge-tr:#dde5ee; --ubar-tr:#dde5ee;
+  --lyr-seal:#dfe4ef; --lyr-res:#ffe3b4; --lyr-alev:#d6e8f6; --lyr-clay:#e4e8ee; --lyr-water:#cbe4f8;
+  --lyr-line:rgba(30,60,95,.45); --plot-bg:#f6fafd;
+  --w1:#3f8fc4; --w2:#4aa8d8; --w3:#63c4e8;
+  --hatch-bg:rgba(200,56,47,.05); --hatch-line:rgba(200,56,47,.30);
+  --grid-ln:rgba(16,42,72,.10);
+  --ph1:#3b8ede; --ph2:#0f9b8e; --ph3:#e2940a; --ph4:#8b5cf6; --playline:#b8860b; --dot-stroke:#ffffff;
+  --spark1:#0f9b8e; --spark2:#2b7fd4; --spark3:#d98207; --scan:#0d1b2a;
+  --gbase-c:#7d8ea3; --gmodel-c:#0f9b8e; --gmodel-glow:rgba(15,155,142,.22); --gfault-c:rgba(200,56,47,.7);
+  --lbl-gl:#4a5d73; --lbl-hot:#8f5300; --lbl-cy:#1b6fa8; --lbl-rd:#a32b23;
+  --lane-bg:#f2f6fb; --lane-zero:#c3cfdb; --cyc-sep:#b9c6d4;
+  --plot-frame:#c6d3e0; --river-glow:rgba(43,127,212,.14); --river-flow:rgba(255,255,255,.85);
+  --shoal-f:rgba(226,148,10,.16); --shoal-s:rgba(194,116,10,.5);
+  --traj-c:#2b7fd4; --cross-c:rgba(15,155,142,.6); --compass:#0d1b2a;
+  --ms-empty:rgba(16,42,72,.28);
+}
+/* ============ ТЁМНАЯ ТЕМА ============ */
+[data-theme="dark"]{
+  --bg:#05080d; --panel:#0b111b; --panel2:#0f1826; --soft:#0a111b; --viz:#060a10;
+  --line:rgba(148,180,220,.16); --line2:rgba(148,180,220,.08);
+  --txt:#e8eef7; --txt2:#c9d7e7; --muted:#93a9c0; --faint:#7b8fa6;
+  --cyan:#35e0cf; --cyan-d:#35e0cf; --cyan2:#59b7ff; --amber:#f6a83c; --amber-l:#f6a83c;
+  --red:#ff8f8f; --violet:#c58bff; --green:#7ce7a8;
+  --ok-fg:#35e0cf; --ok-bg:rgba(53,224,207,.12); --ok-bd:rgba(53,224,207,.45); --ok-solid:#35e0cf;
+  --warn-fg:#f6a83c; --warn-bg:rgba(246,168,60,.13); --warn-bd:rgba(246,168,60,.5); --warn-solid:#f6a83c;
+  --bad-fg:#ff9b9b; --bad-bg:rgba(255,90,90,.14); --bad-bd:rgba(255,110,110,.5); --bad-solid:#ff8f8f;
+  --hdr:rgba(5,8,13,.85); --foot:#04070b;
+  --body-g1:rgba(53,224,207,.07); --body-g2:rgba(89,183,255,.06);
+  --blk-a:#0c1119; --blk-b:#070b12; --blk-g1:rgba(246,168,60,.13); --blk-g2:rgba(89,183,255,.09);
+  --sh:0 10px 34px rgba(0,0,0,.38);
+  --gauge-tr:rgba(148,180,220,.16); --ubar-tr:rgba(148,180,220,.16);
+  --lyr-seal:rgba(140,120,180,.22); --lyr-res:rgba(246,168,60,.26); --lyr-alev:rgba(120,160,200,.20);
+  --lyr-clay:rgba(96,116,146,.20); --lyr-water:rgba(56,140,200,.24);
+  --lyr-line:rgba(190,215,240,.32); --plot-bg:#070d15;
+  --w1:#1a6d94; --w2:#2592b8; --w3:#31b6d4;
+  --hatch-bg:rgba(255,120,120,.05); --hatch-line:rgba(255,120,120,.30);
+  --grid-ln:rgba(120,180,255,.10);
+  --ph1:#59b7ff; --ph2:#35e0cf; --ph3:#f6a83c; --ph4:#c58bff; --playline:#f6d15a; --dot-stroke:#04070b;
+  --spark1:#35e0cf; --spark2:#59b7ff; --spark3:#f6a83c; --scan:#eafffb;
+  --gbase-c:#9fb0c4; --gmodel-c:#35e0cf; --gmodel-glow:rgba(53,224,207,.28); --gfault-c:rgba(255,143,143,.7);
+  --lbl-gl:#93a9c0; --lbl-hot:#ffd9a0; --lbl-cy:#baf6ee; --lbl-rd:#ffb9b9;
+  --lane-bg:rgba(148,180,220,.055); --lane-zero:rgba(148,180,220,.22); --cyc-sep:rgba(148,180,220,.3);
+  --plot-frame:rgba(148,180,220,.2); --river-glow:rgba(46,168,201,.22); --river-flow:rgba(190,245,255,.5);
+  --shoal-f:rgba(246,168,60,.14); --shoal-s:rgba(246,168,60,.4);
+  --traj-c:#59b7ff; --cross-c:rgba(53,224,207,.55); --compass:#e8eef7;
+  --ms-empty:rgba(148,180,220,.3);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'Manrope',system-ui,sans-serif;line-height:1.6;overflow-x:hidden;
+  background-image:radial-gradient(1100px 500px at 8% -6%,var(--body-g1),transparent 60%),
+                   radial-gradient(900px 460px at 100% 0%,var(--body-g2),transparent 60%);
+  transition:background-color .35s ease,color .35s ease}
+body.lb-open{overflow:hidden}
+::selection{background:rgba(15,155,142,.22)}
+img,video{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+#prog{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--cyan),var(--cyan2));z-index:120}
+header{position:sticky;top:0;z-index:100;background:var(--hdr);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:16px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.06em;font-size:14px;color:var(--txt)}
+.logo .dot{width:10px;height:10px;border-radius:3px;background:linear-gradient(135deg,var(--cyan),var(--cyan2));box-shadow:0 0 0 3px var(--ok-bg)}
+.logo small{display:block;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:10px;color:var(--muted);letter-spacing:.14em}
+nav.links{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
+nav.links a{font-size:12.5px;font-weight:600;color:var(--muted);padding:8px 10px;border-radius:10px;transition:.25s}
+nav.links a:hover{color:var(--txt);background:var(--line2)}
+nav.links a.act{color:var(--cyan-d);background:var(--ok-bg)}
+#themeBtn{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;font-weight:700;
+  border:1px solid var(--line);color:var(--txt2);background:var(--panel);border-radius:10px;padding:9px 14px;transition:.25s}
+#themeBtn:hover{border-color:var(--ok-bd);color:var(--cyan-d)}
+@media(max-width:1140px){nav.links a{font-size:11px;padding:7px 6px}}
+@media(max-width:940px){nav.links{display:none}}
+
+.hero{position:relative;min-height:86vh;display:flex;align-items:center;overflow:hidden}
+.hero .bg{position:absolute;inset:0}
+.hero .bg:after{content:'';position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(6,14,24,.80) 0%,rgba(6,14,24,.52) 45%,rgba(6,14,24,.90) 100%),
+  repeating-linear-gradient(90deg,rgba(160,210,255,.06) 0 1px,transparent 1px 90px),
+  repeating-linear-gradient(0deg,rgba(160,210,255,.06) 0 1px,transparent 1px 90px)}
+.hero .wrap{position:relative;z-index:2;padding-top:56px;padding-bottom:56px;width:100%}
+.hero-inner{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:44px;align-items:center}
+@media(max-width:1020px){.hero-inner{grid-template-columns:1fr;gap:30px}}
+.kicker{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#6fe6d6;margin-bottom:20px}
+.kicker b{color:#ffca7a;font-weight:400}
+h1{font-size:clamp(32px,5.4vw,64px);font-weight:800;line-height:1.05;letter-spacing:-.02em;max-width:16ch;color:#fff}
+h1 em{font-style:normal;background:linear-gradient(90deg,#5ef0dd,#8fc9ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{margin-top:20px;max-width:58ch;color:#d6e3f0;font-size:clamp(14.5px,1.5vw,17px)}
+.tags{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}
+.tag{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;padding:7px 13px;border:1px solid rgba(190,220,245,.3);border-radius:999px;color:#e2edf8;background:rgba(8,16,26,.55)}
+.tag.hot{border-color:rgba(255,196,110,.55);color:#ffd79a}
+.status{background:rgba(7,14,23,.86);border:1px solid rgba(150,200,235,.22);border-radius:16px;overflow:hidden;
+  box-shadow:0 24px 70px rgba(0,0,0,.45);backdrop-filter:blur(6px)}
+.status-head{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid rgba(150,200,235,.18);
+  background:linear-gradient(90deg,rgba(15,155,142,.28),transparent);font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#7ce7a8}
+.sdot{width:8px;height:8px;border-radius:50%;background:#7ce7a8;box-shadow:0 0 10px #7ce7a8;animation:blink 1.5s infinite}
+@keyframes blink{50%{opacity:.25}}
+.status-head .smeta{margin-left:auto;color:#a9bdd2;letter-spacing:.1em;font-size:9.5px;text-align:right}
+@media(max-width:520px){.status-head .smeta{display:none}}
+.status-body{padding:8px 16px 12px}
+.sline{display:flex;align-items:baseline;gap:10px;font-family:'JetBrains Mono',monospace;font-size:11.5px;padding:8px 0;
+  opacity:0;transform:translateX(-10px);animation:sIn .55s forwards}
+.sline:nth-child(1){animation-delay:.15s}.sline:nth-child(2){animation-delay:.3s}
+.sline:nth-child(3){animation-delay:.45s}.sline:nth-child(4){animation-delay:.6s}.sline:nth-child(5){animation-delay:.75s}
+@keyframes sIn{to{opacity:1;transform:none}}
+.sline i{color:#5ef0dd;font-style:normal;font-size:9px}
+.sline i.am{color:#ffca7a}
+.sline b{font-weight:400;color:#eaf3fb;letter-spacing:.06em;white-space:nowrap}
+.sline .lead-dot{flex:1;border-bottom:1px dotted rgba(190,220,245,.35);transform:translateY(-3px);min-width:14px}
+.sline span{color:#b6c8da;letter-spacing:.06em;white-space:nowrap;font-size:10.5px}
+.status-foot{display:flex;align-items:center;gap:8px;padding:10px 16px;border-top:1px solid rgba(150,200,235,.18);
+  background:rgba(4,9,16,.7);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;color:#93a9c0;text-transform:uppercase}
+.status-foot .cur{color:#5ef0dd;animation:blink 1s steps(1) infinite}
+.status-foot .scan{margin-left:auto;color:rgba(94,240,221,.75)}
+
+section{padding:88px 0}
+#industry{padding-top:72px}
+.shead{display:flex;align-items:flex-end;gap:18px;margin-bottom:14px}
+.snum{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--amber);letter-spacing:.2em;padding-bottom:8px;font-weight:700}
+h2{font-size:clamp(26px,3.6vw,42px);font-weight:800;letter-spacing:-.01em;line-height:1.12;color:var(--txt)}
+.ssub{color:var(--muted);max-width:86ch;margin-bottom:32px;font-size:15.5px}
+.ssub b{color:var(--txt2);font-weight:700}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:26px;position:relative;overflow:hidden;box-shadow:var(--sh)}
+.card:before{content:'';position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,transparent,var(--ok-bd),transparent);opacity:0;transition:.4s}
+.card:hover:before{opacity:1}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:960px){.grid2,.grid3{grid-template-columns:1fr}}
+h3{font-size:19px;font-weight:700;margin-bottom:12px;color:var(--txt)}
+.lbl{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan-d);margin-bottom:10px;font-weight:700}
+.lbl.am{color:var(--amber)}
+.lbl.rd{color:var(--red)}
+ul.chk{list-style:none;display:grid;gap:9px}
+ul.chk li{position:relative;padding-left:26px;color:var(--txt2);font-size:14.5px}
+ul.chk li:before{content:'✓';position:absolute;left:0;top:0;color:var(--cyan);font-weight:700}
+ul.chk.no li:before{content:'✕';color:var(--red)}
+ul.chk li code{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--warn-fg);background:var(--warn-bg);padding:1px 6px;border-radius:6px}
+.disclaim{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.02em;margin-top:14px;line-height:1.75}
+.disclaim b{color:var(--txt2)}
+
+.tbl{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:12.5px}
+.tbl th{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--panel2)}
+.tbl td{padding:11px 12px;border-bottom:1px solid var(--line2);color:var(--txt2);vertical-align:top}
+.tbl td:first-child{color:var(--cyan-d);font-weight:700}
+.tbl tr:hover td{background:var(--ok-bg)}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel);box-shadow:var(--sh)}
+
+.roles{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:960px){.roles{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.roles{grid-template-columns:1fr}}
+.role{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--sh)}
+.role b{display:block;font-size:38px;font-weight:800;color:var(--cyan2);line-height:1}
+.role h4{font-size:13px;font-family:'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;margin:10px 0 8px;color:var(--txt)}
+.role p{font-size:13px;color:var(--muted)}
+
+.blk{margin-top:10px;border:1px solid var(--line);border-radius:20px;padding:clamp(20px,3vw,34px);overflow:hidden;box-shadow:var(--sh);
+  background:
+  radial-gradient(900px 420px at 10% -12%,var(--blk-g1),transparent 62%),
+  radial-gradient(760px 400px at 100% 4%,var(--blk-g2),transparent 60%),
+  linear-gradient(180deg,var(--blk-a),var(--blk-b))}
+.blk-head{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;justify-content:space-between;margin-bottom:22px}
+.blk-head h3{font-size:clamp(21px,2.7vw,31px);font-weight:800;letter-spacing:-.01em;margin:6px 0 10px;max-width:36ch}
+.blk-head p{color:var(--muted);max-width:84ch;font-size:14.5px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);
+  border-radius:999px;padding:7px 12px;color:var(--txt2);background:var(--panel);white-space:nowrap}
+.chip b{color:var(--cyan-d);font-weight:700}
+.chip.am b{color:var(--amber)}
+
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:30px}
+@media(max-width:1000px){.flow{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.flow{grid-template-columns:1fr}}
+.fstep{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--sh)}
+.fstep .fn{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--amber);font-weight:700}
+.fstep h4{font-size:16px;font-weight:700;margin:8px 0;color:var(--txt)}
+.fstep p{font-size:13px;color:var(--muted)}
+.fstep b{color:var(--cyan-d);font-family:'JetBrains Mono',monospace}
+.fstep:not(:last-child):after{content:'→';position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:16px;z-index:2}
+@media(max-width:1000px){.fstep:after{display:none}}
+
+.case-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:38px 0 14px}
+.case-tag{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#fff;
+  background:linear-gradient(90deg,var(--ok-solid),var(--cyan2));border-radius:8px;padding:7px 12px;font-weight:700}
+.case-tag.b{background:linear-gradient(90deg,var(--warn-solid),#f0b64a)}
+.case-head h3{font-size:clamp(19px,2.3vw,25px);margin:0;color:var(--txt)}
+.case-head .ver{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 11px;background:var(--panel)}
+.case-head .st{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ok-fg);border:1px solid var(--ok-bd);border-radius:999px;padding:6px 12px;background:var(--ok-bg);font-weight:700}
+
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--sh)}
+.kpi b{font-size:clamp(20px,2.4vw,28px);font-weight:800;color:var(--amber);display:block;line-height:1.1}
+.kpi b.cy{color:var(--cyan-d)}
+.kpi span{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-top:8px}
+
+.dvs-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}
+@media(max-width:980px){.dvs-grid{grid-template-columns:1fr}}
+.console{background:#0a1420;border:1px solid rgba(150,200,235,.22);border-radius:14px;overflow:hidden;box-shadow:var(--sh)}
+.con-top{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid rgba(150,200,235,.18);background:rgba(15,28,44,.9);flex-wrap:wrap}
+.live{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;color:#7ce7a8}
+.live i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#7ce7a8;margin-right:7px;animation:blink 1.4s infinite}
+.con-clock{font-family:'JetBrains Mono',monospace;font-size:11px;color:#a9bdd2;letter-spacing:.1em}
+.con-acts{margin-left:auto;display:flex;gap:6px}
+.con-acts button{cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid rgba(150,200,235,.28);background:transparent;color:#d6e5f2;border-radius:7px;padding:5px 9px;transition:.2s}
+.con-acts button:hover{border-color:#5ef0dd;color:#5ef0dd}
+.con-body{height:246px;overflow:hidden;padding:12px 14px;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.95;color:#bfe6dc}
+.con-body div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.con-body .ts{color:#7f9ab2}
+.con-body .ok{color:#8ef0b4}
+.con-body .nm{color:#5ef0dd}
+.con-body .info{color:#a9bdd2}
+.val-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:520px){.val-grid{grid-template-columns:1fr}}
+.val{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:13px 14px}
+.val span{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.val b{display:block;font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:700;color:var(--txt);margin-top:6px}
+.val b.cy{color:var(--cyan-d)}
+.val em{display:block;font-style:normal;font-size:11.5px;color:var(--muted);margin-top:4px}
+.hi-flag{display:flex;align-items:center;gap:12px;background:var(--ok-bg);border:1px solid var(--ok-bd);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.hi-flag .big{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:700;color:var(--ok-solid);line-height:1}
+.hi-flag .txt{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.hi-flag .stt{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--green);letter-spacing:.1em;font-weight:700}
+
+.hi-grid{display:grid;grid-template-columns:270px minmax(0,1fr);gap:26px}
+@media(max-width:940px){.hi-grid{grid-template-columns:1fr}}
+.gauge-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:22px 16px}
+.gauge{width:200px;height:200px}
+.gauge .tr{fill:none;stroke:var(--gauge-tr);stroke-width:12;stroke-linecap:round}
+.gauge .vl{fill:none;stroke:var(--ok-solid);stroke-width:12;stroke-linecap:round;transition:stroke-dashoffset .5s ease,stroke .5s ease}
+.gauge .num{font-family:'JetBrains Mono',monospace;font-size:34px;font-weight:700;fill:var(--txt)}
+.gauge .cap{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.16em;fill:var(--muted)}
+.gnote{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;line-height:1.7}
+.hi-row{border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:var(--panel);margin-bottom:9px;transition:.25s}
+.hi-row .l1{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.hi-row code{font-family:'JetBrains Mono',monospace;color:var(--cyan-d);font-size:12.5px;font-weight:700}
+.hi-row .nm{font-size:13.5px;color:var(--txt2)}
+.hi-row .nr{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);margin-left:auto;letter-spacing:.04em}
+.seg{display:flex;gap:4px;margin-top:10px;flex-wrap:wrap}
+.seg button{cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:8px;padding:6px 10px;transition:.2s}
+.seg button:hover{color:var(--txt);border-color:var(--line)}
+.seg button.on[data-st="0"]{color:var(--ok-fg);border-color:var(--ok-bd);background:var(--ok-bg);font-weight:700}
+.seg button.on[data-st="1"]{color:var(--warn-fg);border-color:var(--warn-bd);background:var(--warn-bg);font-weight:700}
+.seg button.on[data-st="2"]{color:var(--bad-fg);border-color:var(--bad-bd);background:var(--bad-bg);font-weight:700}
+.hi-row .l2{display:none;margin-top:11px;padding-top:10px;border-top:1px dashed var(--line);
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--warn-fg);line-height:1.75}
+.hi-row.dev{border-color:var(--warn-bd);background:var(--warn-bg)}
+.hi-row.dev .l2{display:block}
+.hi-row.bad{border-color:var(--bad-bd);background:var(--bad-bg)}
+.hi-row.bad .l2{color:var(--bad-fg)}
+.hi-recs{margin-top:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;width:100%}
+
+.tools{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}
+.tools button{cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--line);background:var(--panel);color:var(--txt2);border-radius:9px;padding:8px 13px;transition:.2s;font-weight:600}
+.tools button:hover{border-color:var(--ok-bd);color:var(--cyan-d);background:var(--ok-bg)}
+.tools button.act{border-color:var(--bad-bd);color:var(--bad-fg);background:var(--bad-bg)}
+.tools .hint{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
+.viz{background:var(--viz);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--sh)}
+.viz svg{width:100%;height:auto;display:block}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px;vertical-align:-1px}
+.sw1{background:var(--ph1)}.sw2{background:var(--ph2)}.sw3{background:var(--ph3)}.sw4{background:var(--ph4)}.sw5{background:var(--playline)}
+.swc{background:var(--cyan)}.swa{background:var(--amber)}
+.swr{background:none!important;border-radius:0!important;width:16px!important;height:0!important;border-top:2px dashed var(--traj-c)}
+.swg{background:none!important;border-radius:0!important;width:16px!important;height:0!important;border-top:2px dashed var(--gbase-c)}
+.swx{background:none!important;border-radius:2px!important;width:14px!important;height:9px!important;border:1px dashed var(--bad-solid)}
+.swy{background:var(--lyr-res)}
+.readout{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px}
+@media(max-width:900px){.readout{grid-template-columns:repeat(2,1fr)}}
+.ro{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.ro span{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.ro b{display:block;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;margin-top:5px;color:var(--txt)}
+.ro b.ok{color:var(--ok-fg)}.ro b.bad{color:var(--bad-fg)}
+.lane-bg{fill:var(--lane-bg)}
+.lane-zero{stroke:var(--lane-zero);stroke-width:1;stroke-dasharray:3 4}
+.lane-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;fill:var(--lbl-gl);font-weight:700}
+.cyc-sep{stroke:var(--cyc-sep);stroke-width:1;stroke-dasharray:5 5}
+.cyc-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;fill:var(--lbl-gl);font-weight:700}
+.ph-bg{opacity:.28}.ph-on{opacity:1}
+.phc0{fill:var(--ph1)}.phc1{fill:var(--ph2)}.phc2{fill:var(--ph3)}.phc3{fill:var(--ph4)}
+.sig0{stroke:var(--ph1)}.sig1{stroke:var(--ph2)}.sig2{stroke:var(--ph3)}.sig3{stroke:var(--ph4)}
+.sig{fill:none;stroke-width:1.9;opacity:.95}
+.play-line{stroke:var(--playline);stroke-width:1.6;opacity:.95}
+.play-dot{fill:var(--playline);stroke:var(--dot-stroke);stroke-width:1.4}
+.anom-zone{fill:var(--bad-bg);stroke:var(--bad-bd);stroke-width:1;stroke-dasharray:5 4}
+.anom-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;fill:var(--bad-fg);font-weight:700}
+.rec-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;fill:var(--ok-fg);font-weight:700}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:980px){.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.steps{grid-template-columns:1fr}}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;position:relative;box-shadow:var(--sh)}
+.step .sn{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;color:var(--amber);font-weight:700}
+.step h4{font-size:15.5px;font-weight:700;margin:8px 0;color:var(--txt)}
+.step p{font-size:13px;color:var(--muted)}
+.step:not(:last-child):after{content:'→';position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:var(--cyan);font-family:'JetBrains Mono',monospace}
+@media(max-width:980px){.step:after{display:none}}
+.cause-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:960px){.cause-grid{grid-template-columns:1fr}}
+.cause{border:1px solid var(--line);border-radius:14px;padding:18px;background:var(--soft);margin-bottom:12px}
+.cause .ch{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.cause .ci{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font-size:13px;background:var(--ok-bg);border:1px solid var(--ok-bd);font-family:'JetBrains Mono',monospace;color:var(--ok-fg);font-weight:700;flex:none}
+.cause.h .ci{background:var(--warn-bg);border-color:var(--warn-bd);color:var(--warn-fg)}
+.cause.m .ci{background:rgba(124,77,204,.12);border-color:rgba(124,77,204,.35);color:var(--violet)}
+.cause h5{font-size:15px;font-weight:700;color:var(--txt)}
+.cause p{font-size:13px;color:var(--muted)}
+.ctags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.ctag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--txt2);
+  border:1px solid var(--line);border-radius:999px;padding:4px 9px;background:var(--panel)}
+
+.top8{display:grid;grid-template-columns:1fr 1fr;gap:14px;counter-reset:t8}
+@media(max-width:860px){.top8{grid-template-columns:1fr}}
+.t8{counter-increment:t8;display:flex;gap:16px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:.3s;box-shadow:var(--sh)}
+.t8:hover{transform:translateY(-3px);border-color:var(--ok-bd)}
+.t8:before{content:'0' counter(t8);font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--amber);line-height:1.2}
+.t8 p{font-size:15px;font-weight:600;color:var(--txt2)}
+.num3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+@media(max-width:700px){.num3{grid-template-columns:1fr}}
+.num3 .card{padding:20px}
+.num3 b{display:block;font-size:38px;font-weight:800;color:var(--amber);line-height:1}
+.num3 span{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-top:8px}
+
+.jam-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:22px}
+@media(max-width:1000px){.jam-grid{grid-template-columns:1fr}}
+.jam-map{background:var(--viz);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:var(--sh)}
+.jam-map svg{width:100%;height:clamp(400px,62vh,580px);display:block}
+.plotbg{fill:var(--plot-bg)}
+.plotframe{fill:none;stroke:var(--plot-frame);stroke-width:1}
+#grid100 path{stroke:var(--grid-ln)}
+.riverGlow{fill:none;stroke:var(--river-glow);stroke-width:36;stroke-linecap:round;stroke-linejoin:round}
+.river{fill:none;stroke:url(#waterGrad);stroke-width:19;stroke-linecap:round;stroke-linejoin:round}
+#waterGrad stop:nth-child(1){stop-color:var(--w1)}
+#waterGrad stop:nth-child(2){stop-color:var(--w2)}
+#waterGrad stop:nth-child(3){stop-color:var(--w3)}
+.riverFlow{fill:none;stroke:var(--river-flow);stroke-width:1.3;stroke-dasharray:6 11;animation:flow 3.2s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-34}}
+.shoal{fill:var(--shoal-f);stroke:var(--shoal-s);stroke-width:1;stroke-dasharray:4 3}
+.traj{fill:none;stroke:var(--traj-c);stroke-width:1.8;stroke-dasharray:7 6;animation:fly 2.6s linear infinite}
+#trajArrow path{fill:var(--traj-c)}
+@keyframes fly{to{stroke-dashoffset:-26}}
+.jm{cursor:pointer}
+.jm .halo{fill:none;stroke-width:1.5;opacity:.6;transition:.25s}
+.jm .core{stroke:var(--dot-stroke);stroke-width:1.8;transition:.25s}
+.jm .pulse{fill:none;stroke-width:1.6;opacity:0}
+.jm.water .halo,.jm.water .pulse{stroke:var(--cyan)}
+.jm.water .core{fill:var(--cyan)}
+.jm.shoal .halo,.jm.shoal .pulse{stroke:var(--amber)}
+.jm.shoal .core{fill:var(--amber)}
+.jm:hover .halo{opacity:1}
+.jm.sel .halo{opacity:1;stroke-width:2.2}
+.jm.sel .pulse{animation:ping 1.9s ease-out infinite}
+@keyframes ping{0%{r:7;opacity:.85}100%{r:26;opacity:0}}
+.jm text{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.04em;fill:var(--lbl-gl);font-weight:700}
+.jm.sel text{fill:var(--txt)}
+.cross{stroke:var(--cross-c);stroke-width:1;stroke-dasharray:4 4}
+.axtxt{font-family:'JetBrains Mono',monospace;font-size:9px;fill:var(--lbl-gl);letter-spacing:.04em;font-weight:700}
+.ui-txt{font-family:'JetBrains Mono',monospace;font-size:9px;fill:var(--lbl-gl);letter-spacing:.12em;font-weight:700}
+.compassN{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;fill:var(--compass)}
+.jam-side{display:grid;gap:22px;align-content:start}
+.panel-rows{display:grid;gap:1px;background:var(--line2);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:16px}
+.prow{display:flex;justify-content:space-between;gap:14px;background:var(--panel);padding:11px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;align-items:center}
+.prow span{color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-size:10px}
+.prow b{color:var(--txt);font-weight:700;text-align:right}
+.prow b.hl{color:var(--cyan-d)}
+.prow.blk-row{display:block}
+.cls-toggle{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.cls-toggle button{cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  padding:8px 12px;border-radius:9px;border:1px solid var(--line);background:var(--panel);color:var(--muted);transition:.2s}
+.cls-toggle button.on.w{border-color:var(--ok-bd);color:var(--ok-fg);background:var(--ok-bg);font-weight:700}
+.cls-toggle button.on.s{border-color:var(--warn-bd);color:var(--warn-fg);background:var(--warn-bg);font-weight:700}
+.xl-table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:11.5px}
+.xl-table th{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);background:var(--panel2)}
+.xl-table td{padding:9px 10px;border-bottom:1px solid var(--line2);color:var(--txt2)}
+.xl-table tbody tr{cursor:pointer;transition:.2s;background:var(--panel)}
+.xl-table tbody tr:hover td{background:var(--ok-bg)}
+.xl-table tbody tr.sel td{background:var(--ok-bg);color:var(--txt)}
+.xl-table tbody tr.sel td:first-child{color:var(--cyan-d);font-weight:700}
+.clsdot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;vertical-align:1px}
+.clsdot.water{background:var(--cyan)}.clsdot.shoal{background:var(--amber)}
+.badge{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:10px 13px;border-radius:10px;border:1px solid;display:block;text-align:center;transition:.3s;font-weight:700}
+.badge.ok{color:var(--ok-fg);border-color:var(--ok-bd);background:var(--ok-bg)}
+.badge.warn{color:var(--warn-fg);border-color:var(--warn-bd);background:var(--warn-bg)}
+.badge.danger{color:var(--bad-fg);border-color:var(--bad-bd);background:var(--bad-bg);animation:blinker 1.1s ease-in-out infinite}
+@keyframes blinker{50%{filter:brightness(1.25)}}
+.ubar{height:8px;border-radius:6px;background:var(--ubar-tr);overflow:hidden;margin-top:8px}
+.ubar i{display:block;height:100%;width:12%;background:linear-gradient(90deg,var(--ok-solid),var(--warn-solid) 62%,var(--bad-solid));transition:width .25s}
+
+.geo-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:22px}
+@media(max-width:1040px){.geo-grid{grid-template-columns:1fr}}
+.geo-side{display:grid;gap:22px;align-content:start}
+.geo-slider{flex:1;min-width:180px;accent-color:var(--cyan);height:22px;cursor:pointer}
+.spark-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:760px){.spark-grid{grid-template-columns:1fr}}
+.spark{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px}
+.spark .sh{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:700}
+.spark svg{width:100%;height:44px;display:block}
+.spark-zone{fill:var(--bad-bg)}
+.spark-scan{stroke:var(--scan);stroke-width:1.2;opacity:.8}
+.sp1{stroke:var(--spark1)}.sp2{stroke:var(--spark2)}.sp3{stroke:var(--spark3)}
+.spark path.sig{stroke-width:1.6;opacity:.95}
+.eff{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:1000px){.eff{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.eff{grid-template-columns:1fr}}
+.eff .card{padding:20px}
+.eff h4{font-size:15px;font-weight:700;margin-bottom:8px;color:var(--txt)}
+.eff p{font-size:13px;color:var(--muted)}
+.gl{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;fill:var(--lbl-gl);font-weight:700}
+.gl.hot{fill:var(--lbl-hot)}.gl.cy{fill:var(--lbl-cy)}.gl.rd{fill:var(--lbl-rd)}
+.lyr-seal{fill:var(--lyr-seal)}.lyr-res{fill:var(--lyr-res)}.lyr-alev{fill:var(--lyr-alev)}
+.lyr-clay{fill:var(--lyr-clay)}.lyr-water{fill:var(--lyr-water)}
+.lyr-line{fill:none;stroke:var(--lyr-line);stroke-width:1.2}
+.plot-bg{fill:var(--plot-bg)}
+.gmodel{fill:none;stroke:var(--gmodel-c);stroke-width:3;stroke-linecap:round}
+.gmodel-glow{fill:none;stroke:var(--gmodel-glow);stroke-width:9;stroke-linecap:round}
+.gbase{fill:none;stroke:var(--gbase-c);stroke-width:2.2;stroke-dasharray:8 6}
+.gfault{stroke:var(--gfault-c);stroke-width:1.6;stroke-dasharray:9 5}
+.gx-mark{stroke:var(--bad-solid);stroke-width:2.4;fill:none}
+.bit-ring{fill:none;stroke:var(--gmodel-c);stroke-width:1.4;opacity:.6}
+.bit-core{fill:var(--gmodel-c);stroke:var(--dot-stroke);stroke-width:2}
+#hatchRed rect{fill:var(--hatch-bg)}
+#hatchRed line{stroke:var(--hatch-line)}
+#coneGrad stop{stop-color:var(--ok-solid)}
+#coneGradHot stop{stop-color:var(--bad-solid)}
+.geo-frame{fill:none;stroke:var(--plot-frame)}
+
+/* ===== media slots ===== */
+.media-slot{margin-top:18px}
+.ms-frame{border:1.5px dashed var(--ms-empty);border-radius:14px;overflow:hidden;background:var(--soft);transition:.3s;position:relative}
+.media-slot.filled .ms-frame{border-style:solid;border-color:var(--ok-bd)}
+.media-slot.err .ms-frame{border-style:solid;border-color:var(--bad-bd);background:var(--bad-bg)}
+.ms-drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;min-height:150px;cursor:pointer;background:transparent;border:0;color:var(--muted);font-family:'Manrope',sans-serif;padding:18px;text-align:center;transition:.25s}
+.ms-drop:hover{background:var(--ok-bg);color:var(--txt)}
+.ms-drop svg{stroke:var(--cyan)}
+.ms-drop .t1{font-weight:700;font-size:14px;color:var(--txt2)}
+.ms-drop .t2{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase}
+.ms-drop .t3{font-size:11.5px;color:var(--amber);font-family:'JetBrains Mono',monospace}
+.ms-drop .t4{font-size:10.5px;color:var(--faint);font-family:'JetBrains Mono',monospace;letter-spacing:.02em}
+.ms-media{position:relative;cursor:zoom-in}
+.ms-media img,.ms-media video{width:100%;max-height:460px;object-fit:cover;background:#0b1119}
+.ms-media:after{content:'⤢  КЛИК — ОТКРЫТЬ И УВЕЛИЧИТЬ';position:absolute;left:10px;top:10px;
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;color:#eafffb;background:rgba(6,14,22,.8);
+  border:1px solid rgba(94,240,221,.55);border-radius:8px;padding:6px 10px;opacity:0;transform:translateY(-4px);transition:.25s;pointer-events:none}
+.ms-media:hover:after{opacity:1;transform:none}
+.ms-tools{display:flex;align-items:center;gap:10px;padding:9px 12px;border-top:1px solid var(--line);background:var(--panel);font-family:'JetBrains Mono',monospace;font-size:11px}
+.ms-tools .nm{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.ms-tools .src{color:var(--ok-fg);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--ok-bd);border-radius:6px;padding:2px 7px;flex:none}
+.ms-tools button{cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--txt2);border-radius:8px;padding:5px 10px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;transition:.2s}
+.ms-tools button:hover{border-color:var(--ok-bd);color:var(--cyan-d)}
+.ms-tools button.rm:hover{border-color:var(--bad-bd);color:var(--bad-fg)}
+.ms-tools button.zoom{border-color:var(--ok-bd);color:var(--cyan-d)}
+.ms-cap{margin-top:8px;font-size:12.5px;color:var(--muted);font-family:'JetBrains Mono',monospace;outline:none;border-bottom:1px dashed transparent;min-height:1.4em}
+.ms-cap:focus{border-bottom-color:var(--ok-bd);color:var(--txt)}
+.ms-cap:empty:before{content:attr(data-ph);opacity:.7}
+.ms-frame.drag{border-color:var(--cyan);background:var(--ok-bg)}
+
+.lb{position:fixed;inset:0;z-index:300;display:none;flex-direction:column}
+.lb.open{display:flex;animation:lbfade .22s ease}
+@keyframes lbfade{from{opacity:0}to{opacity:1}}
+.lb-backdrop{position:absolute;inset:0;background:rgba(4,8,14,.94);backdrop-filter:blur(8px)}
+.lb-top{position:relative;z-index:3;display:flex;gap:14px;align-items:center;justify-content:space-between;
+  padding:14px 18px;border-bottom:1px solid rgba(150,200,235,.18);background:rgba(8,14,22,.8);flex-wrap:wrap}
+.lb-meta{min-width:0}
+.lb-meta b{display:block;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;color:#5ef0dd;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-meta span{display:block;font-size:12px;color:#a9bdd2;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60ch}
+.lb-ctrl{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.lb-ctrl button{cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:#dfe9f4;
+  background:rgba(20,32,48,.9);border:1px solid rgba(150,200,235,.25);border-radius:9px;padding:8px 12px;transition:.2s;min-width:38px}
+.lb-ctrl button:hover{border-color:#5ef0dd;color:#5ef0dd;background:rgba(15,155,142,.16)}
+.lb-ctrl button.lb-x{border-color:rgba(255,120,120,.45);color:#ffb3b3}
+.lb-ctrl button.lb-x:hover{background:rgba(255,90,90,.16);color:#fff}
+.lb-pos{font-family:'JetBrains Mono',monospace;font-size:11px;color:#a9bdd2;letter-spacing:.1em;min-width:52px;text-align:center}
+.lb-sep{width:1px;height:22px;background:rgba(150,200,235,.22);margin:0 4px}
+.lb-stage{position:relative;z-index:2;flex:1;overflow:hidden;pointer-events:none;display:flex;align-items:center;justify-content:center}
+.lb-media{pointer-events:auto;transform-origin:center center;will-change:transform;user-select:none;-webkit-user-select:none}
+.lb-media.smooth{transition:transform .18s ease}
+.lb-media img,.lb-media video{max-width:92vw;max-height:74vh;width:auto;height:auto;border-radius:10px;
+  box-shadow:0 24px 80px rgba(0,0,0,.7);background:#000;cursor:grab;display:block}
+.lb-media.grabbing img,.lb-media.grabbing video{cursor:grabbing}
+.lb-hint{position:relative;z-index:3;padding:11px 18px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;color:#8ea4bb;background:rgba(8,14,22,.8);border-top:1px solid rgba(150,200,235,.14)}
+@media(max-width:640px){.lb-meta span{display:none}.lb-hint{font-size:8.5px}.lb-media img,.lb-media video{max-width:96vw;max-height:64vh}}
+
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+
+footer{border-top:1px solid var(--line);padding:48px 0;background:var(--foot)}
+footer .f1{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan-d);font-weight:700}
+footer .f2{font-size:clamp(20px,3vw,32px);font-weight:800;margin-top:10px;color:var(--txt)}
+footer .f3{color:var(--muted);font-size:13px;margin-top:8px}
+footer .f4{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:var(--faint);margin-top:16px;text-transform:uppercase}
+</style>
+<meta name="description" content="Сахалинский центр искусственного интеллекта: проекты компьютерного зрения, промышленной аналитики, геонавигации и мониторинга региона.">
+<link rel="stylesheet" href="design.css">
+</head>
+<body>
+<noscript><div style="padding:20px;text-align:center">Для просмотра интерактивных схем и медиа включите JavaScript в браузере.</div></noscript>
+<div id="prog"></div>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#home" aria-label="На главную"><span class="dot"></span><span>САХАЛИНСКИЙ ЦЕНТР ИИ<small>САХАЛИНТЕХ · СахГУ · 2026</small></span></a>
+    <nav class="links" id="siteNav" aria-label="Разделы сайта">
+      <a href="#industry">Промышленность</a>
+      <a href="#top8">ТОП-8</a>
+      <a href="#geo">Геонавигация</a>
+      <a href="#uav">БПЛА</a>
+      <a href="#jams">Завалы</a>
+      <a href="#detect">Дефекты</a>
+      <a href="#team">Команда</a>
+    </nav>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="siteNav">Меню <span>＋</span></button><button id="themeBtn" type="button">Тема: светлая</button>
+  </div>
+</header>
+
+<!--
+  ============================================================
+  МЕДИА-ФАЙЛЫ: ДВА СПОСОБА ЗАДАТЬ ИСТОЧНИК
+  ============================================================
+  1) ПРЯМО В РАЗМЕТКЕ — атрибут data-src у слота:
+       <div class="media-slot" data-id="jam-photo" data-src="media/zaval_01.jpg"></div>
+     Тип определяется по расширению (.jpg .jpeg .png .gif .webp .svg .avif → фото,
+     .mp4 .webm .mov .m4v .ogv → видео). Можно задать явно: data-type="video/mp4".
+
+  2) В ОДНОМ МЕСТЕ В КОДЕ — объект MEDIA_SOURCES в начале <script> внизу страницы:
+       var MEDIA_SOURCES = {
+         'jam-photo'  : 'media/zavaly/foto_zavala.jpg',
+         'rivers-bbox': 'media/zavaly/bbox.gif',
+         'rivers-seg' : 'media/zavaly/segmentation.mp4',
+         'det-roofs'  : 'media/defects/roof_01.png',
+         'det-roads'  : 'media/defects/road_crack.jpg'
+       };
+     Приоритет: data-src → MEDIA_SOURCES → файл, выбранный кнопкой.
+
+  Файлы должны лежать рядом с этим HTML (или по указанному пути).
+  Кнопки «Заменить» / «Убрать» работают как временная замена до перезагрузки —
+  прописанный путь всегда побеждает при открытии страницы.
+  Клик по медиа — открытие в модальном окне с увеличением.
+  ============================================================
+-->
+
+<!-- HERO -->
+<main id="home"><div class="hero">
+  <div class="bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-inner">
+      <div>
+        <div class="kicker">САХАЛИНТЕХ · Сахалинский государственный университет · <b>2026</b></div>
+        <div class="hero-eyebrow"><span></span> ТЕХНОЛОГИИ С ХАРАКТЕРОМ РЕГИОНА</div><h1>Сахалинский центр <em>искусственного интеллекта</em></h1>
+        <p class="lead">Результаты деятельности: компьютерное зрение и аналитика для региона и промышленности. Команда полного цикла — от разметки данных до промышленной эксплуатации моделей. Проектный офис при минцифры Сахалинской области.</p>
+        <div class="hero-actions"><a class="primary-link" href="#projects">Исследовать проекты <span>↗</span></a><a class="text-link" href="#team">О центре <span>↓</span></a></div><div class="tags">
+          <span class="tag">Компьютерное зрение</span>
+          <span class="tag">Аналитика</span>
+          <span class="tag">Регион</span>
+          <span class="tag hot">Предиктивная аналитика техники</span>
+          <span class="tag hot">Геонавигация скважин</span>
+          <span class="tag hot">Данные БПЛА и лидаров</span>
+        </div>
+      </div>
+
+<div class="hero-art" aria-label="Абстрактная модель связи данных и территории Сахалина" role="img">
+<div class="art-coordinate top">50°41′ N / 142°57′ E <span>САХАЛИН</span></div>
+<svg viewBox="0 0 600 650" fill="none" aria-hidden="true"><defs><linearGradient id="islandG" x1="170" y1="90" x2="430" y2="560" gradientUnits="userSpaceOnUse"><stop stop-color="#aeffdf"/><stop offset=".5" stop-color="#69abff"/><stop offset="1" stop-color="#6670ff"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="14"/></filter><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#647f92" opacity=".4"/></pattern></defs><rect width="600" height="650" fill="url(#dots)"/><g stroke="#6b98bd" opacity=".25"><ellipse cx="300" cy="325" rx="230" ry="230"/><ellipse cx="300" cy="325" rx="230" ry="100" transform="rotate(-35 300 325)"/><ellipse cx="300" cy="325" rx="140" ry="260" transform="rotate(35 300 325)"/><path d="M40 325H560M300 50V600" stroke-dasharray="4 8"/></g><path id="island" d="M352 75 372 112 360 146 374 186 352 213 348 250 321 279 326 313 302 350 305 387 280 415 272 458 244 485 249 516 224 556 207 573 214 532 201 511 222 468 225 435 249 395 252 361 277 328 278 293 302 252 306 215 325 183 320 149 342 119Z" fill="url(#islandG)" opacity=".3" filter="url(#glow)"/><use href="#island" fill="url(#islandG)" fill-opacity=".15" stroke="url(#islandG)" stroke-width="2"/><g stroke="url(#islandG)" opacity=".6"><path d="m342 119 18 27-35 37 27 30-46 2 42 35-46 2 19 27-43 14 48 20-49 15 25 22-50 11 53 26-56 8 31 20-55 20 47 23-50 10 27 17-35 31"/><path d="m352 75-10 44-22 30 40-3-8 67-31 66-44 49-25 33-3 34-24 40-3 33-8 64"/></g><g fill="#b1ffdf"><circle cx="348" cy="211" r="5"/><circle cx="283" cy="335" r="5"/><circle cx="244" cy="481" r="6"/></g><g stroke="#a8ffdd" stroke-opacity=".5"><path d="M348 211h72l25-25h75M283 335H155l-24-24H60M244 481h99l25 25h117"/></g><g fill="#d9e6ef" font-family="monospace" font-size="11"><text x="425" y="175">ДАННЫЕ</text><text x="65" y="300">МОДЕЛИ ИИ</text><text x="370" y="529">РЕШЕНИЯ</text></g></svg>
+<div class="art-coordinate bottom"><span class="signal-dot"></span> ОТ ДАННЫХ — К РЕШЕНИЯМ <span>01 / 05</span></div></div>
+    </div>
+  </div>
+</div>
+<div class="hero-bottom wrap"><span>НАУКА. ДАННЫЕ. ПРАКТИКА.</span><a href="#projects">Листайте, чтобы узнать больше ↓</a><span>САХАЛИНТЕХ / СахГУ</span></div>
+<section class="project-overview" id="projects"><div class="wrap"><div class="section-label">ПРИКЛАДНОЙ ИИ / НАШИ НАПРАВЛЕНИЯ</div><div class="overview-heading"><h2>Интеллект в действии.</h2><p>От производственных процессов до мониторинга территории. Технологии, которые работают с задачами региона.</p></div><div class="project-links">
+<a href="#industry"><span>01 / ПРОМЫШЛЕННОСТЬ</span><h3>Данные становятся<br>решениями</h3><b>Предиктивная аналитика ↗</b></a>
+<a href="#geo"><span>02 / ГЕОНАВИГАЦИЯ</span><h3>Точность<br>на глубине</h3><b>Горизонтальные скважины ↗</b></a>
+<a href="#uav"><span>03 / КОМПЬЮТЕРНОЕ ЗРЕНИЕ</span><h3>Видеть больше.<br>Действовать точнее.</h3><b>Мониторинг с БПЛА ↗</b></a></div>      <div class="status">
+        <div class="status-head">
+          <span class="sdot"></span>Системы активны
+          <span class="smeta">Сахалинская область // минцифры // результаты 2026</span>
+        </div>
+        <div class="status-body">
+          <div class="sline"><i>●</i><b>ПРЕДИКТИВНАЯ АНАЛИТИКА · ВГК</b><span class="lead-dot"></span><span>2 КЕЙСА · v.3.3 / v.3.5</span></div>
+          <div class="sline"><i class="am">●</i><b>ГЕОНАВИГАЦИЯ СКВАЖИН</b><span class="lead-dot"></span><span>MVP · RMSE 6,4</span></div>
+          <div class="sline"><i>●</i><b>БПЛА-МОНИТОРИНГ</b><span class="lead-dot"></span><span>5 НАПРАВЛЕНИЙ · 9 ЗАКАЗЧИКОВ</span></div>
+          <div class="sline"><i>●</i><b>ДЕТЕКЦИЯ ДЕФЕКТОВ</b><span class="lead-dot"></span><span>КРЫШИ МКД · ДОРОЖНОЕ ПОЛОТНО</span></div>
+          <div class="sline"><i class="am">●</i><b>ПОРТФЕЛЬ ПРОЕКТОВ</b><span class="lead-dot"></span><span>28 ЗАДАЧ · 8 ПРИОРИТЕТНЫХ · 6 НАПРАВЛЕНИЙ</span></div>
+        </div>
+        <div class="status-foot">
+          <span>&gt; обработка данных заказчика</span><span class="cur">▮</span>
+          <span class="scan">CENTER_AI // STATUS: OPERATIONAL</span>
+        </div>
+      </div></div></section>
+<!-- ============ 01 · ПРЕДИКТИВНАЯ АНАЛИТИКА ГОРНОРУДНОЙ ТЕХНИКИ ============ -->
+<section id="industry">
+  <div class="wrap">
+    <div class="shead rv"><span class="snum">01</span><h2>Предиктивная аналитика горнорудной техники</h2></div>
+    <p class="ssub rv">Техзаказчик — <b>ООО «Восточная горнорудная компания»</b>. Телеметрия превращается в сервисы предиктивной аналитики: система анализирует параметры телеметрии в реальном времени, классифицирует отклонения от образцового цикла и выдаёт рекомендации операторам и диспетчерам карьера. Следующий шаг — прогноз отказов и рекомендации по обслуживанию техники.</p>
+
+    <div class="flow rv">
+      <div class="fstep"><span class="fn">ШАГ 01</span><h4>Выезд на угольный разрез</h4><p>Сотрудники Центра ИИ изучили производственные процессы на площадке техзаказчика — ООО «Восточная горнорудная компания».</p></div>
+      <div class="fstep"><span class="fn">ШАГ 02</span><h4>Реализованы <b>2</b> кейса</h4><p>Мониторинг состояния двигателей самосвалов · Детекция циклов и аномалий погрузки.</p></div>
+      <div class="fstep"><span class="fn">ШАГ 03</span><h4>Выявлено <b>28</b> прикладных задач</h4><p>Потенциальные проекты для внедрения ИИ в производство на площадке разреза.</p></div>
+      <div class="fstep"><span class="fn">ШАГ 04</span><h4><b>8</b> — ближайшая перспектива</h4><p>ТОП-8 приоритетных проектов в 6 направлениях — сформирован по итогам выезда.</p></div>
+    </div>
+
+    <div class="blk rv">
+      <div class="blk-head">
+        <div>
+          <div class="lbl am">ВГК // ТЕЛЕМЕТРИЯ → СЕРВИСЫ ПРЕДИКТИВНОЙ АНАЛИТИКИ</div>
+          <h3>Два реализованных кейса на данных телеметрии техники</h3>
+          <p>Оба сервиса работают в реальном времени на телеметрии карьерной техники: поток данных разделяется по режимам и фазам, ансамбль моделей машинного обучения сравнивает текущие показатели и текущий цикл с образцовыми, каждое отклонение классифицируется по причине, а диспетчер и оператор получают конкретную рекомендацию.</p>
+        </div>
+        <div class="chips">
+          <span class="chip"><b>2</b> реализованных кейса</span>
+          <span class="chip am"><b>28</b> прикладных задач</span>
+          <span class="chip am"><b>8</b> приоритетных проектов</span>
+          <span class="chip"><b>6</b> направлений</span>
+        </div>
+      </div>
+
+      <!-- КЕЙС 01 -->
+      <div class="case-head rv">
+        <span class="case-tag">Кейс 01 · реализован</span>
+        <h3>Мониторинг состояния двигателей самосвалов</h3>
+        <span class="ver">предиктивная аналитика · v.3.3</span>
+        <span class="st">Health Index</span>
+      </div>
+      <p class="ssub rv" style="margin-bottom:20px">Контроль индекса здоровья двигателя внутреннего сгорания карьерного самосвала в реальном времени. Система анализирует <b>10+ параметров телеметрии</b>, классифицирует отклонения от образцового цикла и выдаёт рекомендации операторам и диспетчерам карьера. <b>Прогнозирование отказов — не менее чем за 20 дней до критического события.</b></p>
+
+      <div class="kpis rv">
+        <div class="kpi"><b class="cy">95%</b><span>точность прогноза</span></div>
+        <div class="kpi"><b class="cy">10+</b><span>параметров анализа</span></div>
+        <div class="kpi"><b>197</b><span>единиц техники</span></div>
+        <div class="kpi"><b>&gt;20</b><span>дней до поломки ДВС</span></div>
+      </div>
+
+      <div class="dvs-grid rv">
+        <div>
+          <div class="lbl">Telemetry.stream · поток с датчиков ДВС</div>
+          <div class="console">
+            <div class="con-top">
+              <span class="live"><i></i>TELEMETRY.STREAM LIVE</span>
+              <span class="con-clock" id="conClock">00:00:00</span>
+              <span class="con-acts">
+                <button type="button" id="conPlay">⏸ Пауза</button>
+                <button type="button" id="conReset">↻ Сброс</button>
+              </span>
+            </div>
+            <div class="con-body" id="conBody"></div>
+          </div>
+          <div class="lbl" style="margin-top:20px">Решаемые задачи</div>
+          <div class="grid3" style="gap:12px">
+            <div class="cause"><div class="ch"><span class="ci">01</span><h5>Снижение простоев техники</h5></div><p>Предсказание отказов оборудования не менее чем за 20 дней до критического события. Автоматическое оповещение диспетчера и формирование рекомендаций по обслуживанию.</p></div>
+            <div class="cause"><div class="ch"><span class="ci">02</span><h5>Оптимизация закупочной деятельности</h5></div><p>Заблаговременное предсказание отказов позволяет обеспечить наличие необходимых запчастей и узлов к моменту наступления потребности в ремонте.</p></div>
+            <div class="cause"><div class="ch"><span class="ci">03</span><h5>Повышение безопасности</h5></div><p>Предупреждение операторов о критических отклонениях, которые могут привести к аварийным ситуациям. Мониторинг нестабильности платформы и инклинометра.</p></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="lbl">Мониторинг состояния ДВС · параметры в реальном времени</div>
+          <div class="hi-flag">
+            <div>
+              <div class="big" id="hiLive">3.5</div>
+              <div class="txt">Health Index ДВС</div>
+            </div>
+            <div class="stt" id="hiLiveState">● НОРМА</div>
+          </div>
+          <div class="val-grid">
+            <div class="val"><span>Oil Idle Low</span><b class="cy">270 kPa</b><em>Давление масла на холостом ходу</em></div>
+            <div class="val"><span>Oil Load Min</span><b class="cy">440 kPa</b><em>Мин. давление масла под нагрузкой</em></div>
+            <div class="val"><span>Turbo Load</span><b class="cy">420 kPa</b><em>Давление турбонаддува</em></div>
+            <div class="val"><span>Oil Torque Ratio</span><b class="cy">2.20</b><em>Эффективность смазки</em></div>
+            <div class="val"><span>Crankcase</span><b class="cy">1.2 kPa</b><em>Давление картерных газов</em></div>
+            <div class="val"><span>Crankcase Oil Ratio</span><b class="cy">0.25%</b><em>Доля масла в картерных газах</em></div>
+            <div class="val"><span>Crankcase CV Load</span><b class="cy">95%</b><em>Нестабильность картера (CV Load)</em></div>
+            <div class="val"><span>Режим работы</span><b class="cy">НОРМА</b><em>● СИСТЕМА АКТИВНА</em></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hi-grid rv" style="margin-top:26px">
+        <div class="gauge-wrap">
+          <svg class="gauge" viewBox="0 0 200 200">
+            <circle class="tr" cx="100" cy="100" r="82" transform="rotate(-90 100 100)" stroke-dasharray="386.4 515.2"/>
+            <circle class="vl" id="hiArc" cx="100" cy="100" r="82" transform="rotate(-90 100 100)" stroke-dasharray="0 515.2"/>
+            <text class="num" id="hiNum" x="100" y="104" text-anchor="middle">100%</text>
+            <text class="cap" x="100" y="126" text-anchor="middle">HEALTH INDEX · ПРИМЕР</text>
+          </svg>
+          <div class="gnote">чем ближе к эталону поведение в каждом режиме,<br>тем выше индекс и тем раньше видны деградации до отказа</div>
+          <div class="hi-recs">
+            <div class="lbl am" style="margin-bottom:8px">Рекомендации диспетчеру и оператору</div>
+            <ul class="chk" id="hiRecs" style="gap:7px"></ul>
+          </div>
+        </div>
+
+        <div>
+          <div class="lbl">Контролируемые параметры · переключите состояние</div>
+          <div id="hiRows"></div>
+        </div>
+      </div>
+
+      <div class="grid2 rv" style="margin-top:26px">
+        <div>
+          <div class="lbl">Разделение телеметрии по режимам работы двигателя</div>
+          <div class="tblwrap">
+            <table class="tbl">
+              <thead><tr><th>Режим</th><th>Условия</th></tr></thead>
+              <tbody>
+                <tr><td>Остановка</td><td>Обороты ДВС &lt; 600</td></tr>
+                <tr><td>Движение с грузом</td><td>Скорость ≥ 5 км/ч · вес &gt; 10 т · обороты ≥ 1700</td></tr>
+                <tr><td>Движение без груза</td><td>Скорость &gt; 5 км/ч · обороты ≥ 1300 · вес &lt; 5 т</td></tr>
+                <tr><td>Low холостой ход</td><td>Скорость &lt; 15 км/ч · обороты 600–880 · давление топлива 150–500 кПа</td></tr>
+                <tr><td>High холостой ход</td><td>Обороты 1030–1150 · давление рейки 450–700 · t ОЖ &gt; 75°C</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="lbl am">Как считается итоговый индекс</div>
+          <h3>От режимов — к Health Index</h3>
+          <ul class="chk">
+            <li>Телеметрия разделяется по режимам работы двигателя</li>
+            <li>Статистические метрики по каждому режиму сравниваются с эталонными значениями</li>
+            <li>Итоговый Health Index — интегральная оценка отклонений от эталона</li>
+            <li>Телеметрия превращается в сервисы предиктивной аналитики</li>
+            <li>Следующий шаг — прогноз отказов и рекомендации по обслуживанию техники</li>
+          </ul>
+           </div>
+      </div>
+
+      <!-- КЕЙС 02 -->
+      <div class="case-head rv" style="margin-top:44px">
+        <span class="case-tag b">Кейс 02 · реализован</span>
+        <h3>Детекция циклов и аномалий погрузки</h3>
+        <span class="ver">предиктивная аналитика · v.3.5</span>
+        <span class="st">Образцовый цикл</span>
+      </div>
+      <p class="ssub rv" style="margin-bottom:20px">Контроль погрузочного цикла экскаватора в реальном времени. Система анализирует <b>120+ параметров телеметрии</b>, классифицирует отклонения от образцового цикла и выдаёт рекомендации операторам и диспетчерам карьера. Фазы цикла — <b>поворот к забою, набор ковша, поворот к самосвалу, выгрузка породы</b> — определяются по колебаниям веса на самосвале, давлению в подвеске, азимуту платформы и показаниям инклинометра стрелы.</p>
+
+      <div class="chips rv" style="margin-bottom:18px">
+        <span class="chip"><b>120+</b> параметров телеметрии</span>
+        <span class="chip"><b>9</b> каналов · <b>20</b> Гц</span>
+        <span class="chip am">эпизод <b>2124_ep_1</b> · Feb 25, 2026</span>
+        <span class="chip am">смена <b>03-10</b> · 10:00–20:00</span>
+        <span class="chip">образцовый цикл — <b>4</b> поворота</span>
+        <span class="chip">baseline <b>100%</b></span>
+      </div>
+
+      <div class="viz rv">
+        <svg id="cycSvg" viewBox="0 0 900 350" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Цикл погрузки: азимут платформы, инклинометр стрелы, вес на самосвале, давление в подвеске">
+          <g id="cycScene"></g>
+        </svg>
+      </div>
+      <div class="legend">
+        <span><i class="sw1"></i>Поворот к забою</span>
+        <span><i class="sw2"></i>Набор ковша</span>
+        <span><i class="sw3"></i>Поворот к самосвалу</span>
+        <span><i class="sw4"></i>Выгрузка породы</span>
+        <span><i class="sw5"></i>Курсор-развёртка</span>
+      </div>
+      <div class="tools">
+        <button type="button" id="cycPlay">❚❚ Пауза</button>
+        <button type="button" id="cycRestart">↻ Сброс</button>
+        <button type="button" id="cycMode">Образцовый</button>
+        <span class="hint" id="cycRec">REC | 9 каналов · 20 Гц | ОБРАЗЦОВЫЙ</span>
+      </div>
+      <div class="readout">
+        <div class="ro"><span>Азимут</span><b id="cycAz">0.0°</b></div>
+        <div class="ro"><span>Фаза</span><b id="cycPhase">—</b></div>
+        <div class="ro"><span>Поворот</span><b id="cycTurn">1 / 4</b></div>
+        <div class="ro"><span>Метка</span><b id="cycTime">08:03:30</b></div>
+        <div class="ro"><span>Оценка цикла</span><b class="ok" id="cycState">Периоды стабильны</b></div>
+      </div>
+      <p class="disclaim">«Образцовая погрузка»: платформа поворачивается равномерно, с одинаковыми периодами, инклинометр показывает синусоидальную картину, время операций стабильно от цикла к циклу. Отклонения фиксируются как аномалии. Схема выше — демонстрация принципа: показаны основные каналы из девяти, форма сигналов иллюстративная.</p>
+    </div>
+
+    <div class="lbl" style="margin-top:34px">Как это работает · четыре этапа от сбора данных до рекомендации</div>
+    <div class="steps">
+      <div class="step"><span class="sn">STEP 01</span><h4>Сбор телеметрии</h4><p>Потоковый сбор параметров с датчиков техники: 10+ параметров ДВС самосвала (давление масла, нагрузка, вибрации, картерные газы, параметры турбины) и 120+ параметров погрузочного цикла (азимут, углы, давления, нагрузки, GPS-координаты).</p></div>
+      <div class="step"><span class="sn">STEP 02</span><h4>ML-анализ</h4><p>Ансамбль моделей машинного обучения в реальном времени сравнивает текущие показатели и текущий цикл с образцовыми и выявляет аномалии.</p></div>
+      <div class="step"><span class="sn">STEP 03</span><h4>Классификация</h4><p>Каждое отклонение классифицируется по типу: техническое, человеческое или смешанное. Определяется корневая причина; нормализованный вклад причин в сумме даёт 100%.</p></div>
+      <div class="step"><span class="sn">STEP 04</span><h4>Рекомендация</h4><p>Диспетчер и оператор получают конкретные рекомендации: корректировка режима работы и траектории, замена узлов и ковша, отдых, смена участка.</p></div>
+    </div>
+
+    <div class="lbl" style="margin-top:34px">Причины отклонений · система классифицирует каждое отклонение и определяет корневую причину</div>
+    <div class="cause-grid">
+      <div>
+        <div class="lbl am">Кейс 01 · ДВС карьерного самосвала</div>
+        <div class="cause"><div class="ch"><span class="ci">01</span><h5>Технические</h5></div><p>Износ поршневой группы и цилиндров, деградация моторного масла, неисправности турбокомпрессора, засорение масляных и воздушных фильтров, повышенное давление картерных газов, утечки в системе смазки.</p><div class="ctags"><span class="ctag">износ</span><span class="ctag">масло</span><span class="ctag">турбина</span></div></div>
+        <div class="cause h"><div class="ch"><span class="ci">02</span><h5>Человеческие</h5></div><p>Агрессивный стиль вождения оператора, работа двигателя на предельных нагрузках без прогрева, игнорирование предупреждающих сигналов, нарушение регламента технического обслуживания, несвоевременная замена расходных материалов.</p><div class="ctags"><span class="ctag">усталость</span><span class="ctag">нагрузка</span><span class="ctag">режим</span></div></div>
+        <div class="cause m"><div class="ch"><span class="ci">03</span><h5>Смешанные</h5></div><p>Неблагоприятные условия эксплуатации: запылённость, экстремальные перепады температур, высокогорье. Организационные факторы: задержки планового ТО, некачественные ГСМ, одновременное воздействие нескольких деградирующих факторов.</p><div class="ctags"><span class="ctag">условия</span><span class="ctag">логистика</span><span class="ctag">смена</span></div></div>
+      </div>
+      <div>
+        <div class="lbl am">Кейс 02 · погрузочный цикл экскаватора</div>
+        <div class="cause"><div class="ch"><span class="ci">⚙</span><h5>Технические</h5></div><p>Геомеханические свойства забоя, обводнение породы, износ зубьев ковша, неисправности гидропривода, отклонения от паспортных характеристик техники.</p><div class="ctags"><span class="ctag">забой</span><span class="ctag">обводнение</span><span class="ctag">гидравлика</span></div></div>
+        <div class="cause h"><div class="ch"><span class="ci">◉</span><h5>Человеческие</h5></div><p>Усталость оператора, снижение концентрации, недостаточная квалификация, нарушение технологической карты, субъективная оценка заполняемости ковша.</p><div class="ctags"><span class="ctag">усталость</span><span class="ctag">внимание</span><span class="ctag">навык</span></div></div>
+        <div class="cause m"><div class="ch"><span class="ci">⬢</span><h5>Смешанные</h5></div><p>Организационные сбои: ожидание самосвала, несогласованность диспетчеризации, погодные условия, одновременное влияние нескольких факторов.</p><div class="ctags"><span class="ctag">логистика</span><span class="ctag">погода</span><span class="ctag">смена</span></div></div>
+      </div>
+    </div>
+
+    <!-- ТОП-8 -->
+    <div id="top8" class="blk rv" style="margin-top:26px">
+      <div class="blk-head">
+        <div>
+          <div class="lbl am">ИТОГ ВЫЕЗДА НА УГОЛЬНЫЙ РАЗРЕЗ</div>
+          <h3>28 прикладных задач · ТОП-8 приоритетных проектов</h3>
+          <p>После реализации двух кейсов Центр ИИ выявил на площадке 28 потенциальных прикладных задач в 6 направлениях. Восемь из них — ближайшая перспектива: они дают эффект на существующем контуре данных техники и не требуют нового оборудования на машинах.</p>
+        </div>
+        <div class="chips">
+          <span class="chip"><b>28</b> прикладных задач</span>
+          <span class="chip am"><b>8</b> приоритетных проектов</span>
+          <span class="chip"><b>6</b> направлений</span>
+        </div>
+      </div>
+      <div class="num3">
+        <div class="card"><b>28</b><span>прикладных задач выявлено</span></div>
+        <div class="card"><b>8</b><span>приоритетных проектов — ближайшая перспектива</span></div>
+        <div class="card"><b>6</b><span>направлений внедрения</span></div>
+      </div>
+      <div class="lbl">ТОП-8 приоритетных проектов</div>
+      <div class="top8">
+        <div class="t8"><p>Авто-детекция дефектов дорожного полотна</p></div>
+        <div class="t8"><p>Контроль фактической отсыпки дорог щебнем</p></div>
+        <div class="t8"><p>Автоматический учет циклов работы и простоев КМУ</p></div>
+        <div class="t8"><p>Контроль качества работы экскаватора</p></div>
+        <div class="t8"><p>Автоматический подсчет ковшей погрузчика в приемном бункере</p></div>
+        <div class="t8"><p>Предиктивный анализ порыва и дефектов конвейерной ленты</p></div>
+        <div class="t8"><p>Контроль уровня заполнения и объема угля на ленте</p></div>
+        <div class="t8"><p>Раннее обнаружение нагрева контактов и перекоса фаз</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 · ГЕОНАВИГАЦИЯ ============ -->
+<section id="geo" style="padding-top:0">
+  <div class="wrap">
+    <div class="shead rv"><span class="snum">02</span><h2>Предиктивная геонавигация горизонтальных скважин</h2></div>
+    <p class="ssub rv">Проект Центра ИИ для нефтегазового заказчика: <b>интеллектуальная система предиктивного геологического моделирования и автоматизированной геонавигации горизонтальных скважин на основе машинного обучения</b>. Переход от ручной интерпретации телеметрии и детерминированных решений — к непрерывному прогнозу геологического разреза вдоль ствола скважины.</p>
+
+    <div class="kpis rv">
+      <div class="kpi"><b>~10 000</b><span>горизонтальных скважин бурится в мире ежегодно</span></div>
+      <div class="kpi"><b class="cy">RMSE 6,4</b><span>метрика качества прототипа · среднеквадратичная ошибка</span></div>
+      <div class="kpi"><b class="cy">MVP</b><span>разработан и протестирован на массиве данных горизонтальных скважин</span></div>
+      <div class="kpi"><b>tvt</b><span>регрессия: прогноз по каждому метру пройденной траектории</span></div>
+    </div>
+
+    <div class="blk rv">
+      <div class="blk-head">
+        <div>
+          <div class="lbl am">ГЕОНАВИГАЦИЯ // ПРОГНОЗ ГЕОЛОГИЧЕСКОГО РАЗРЕЗА В РЕАЛЬНОМ ВРЕМЕНИ</div>
+          <h3>Модель ведёт ствол в коллекторе и предупреждает, когда сомневается</h3>
+          <p>Буровой инструмент за километры от поверхности передаёт данные каротажа (гамма-каротаж, электрическое сопротивление, плотность) и телеметрии. Данные фрагментарны и зашумлены. Система непрерывно прогнозирует структурное положение пласта на несколько метров вперёд и рассчитывает доверительный интервал: при уверенности 95% передаёт управление автоматике или даёт чёткую рекомендацию геологу, при росте неопределённости — маркирует зону «красным флагом» и передаёт её на ручную верификацию.</p>
+        </div>
+        <div class="chips">
+          <span class="chip"><b>tvt</b> · True Vertical Thickness</span>
+          <span class="chip am">Uncertainty Estimation</span>
+          <span class="chip am">Physical Meaningfulness</span>
+          <span class="chip"><b>ансамбли</b> моделей</span>
+        </div>
+      </div>
+
+      <div class="geo-grid">
+        <div>
+          <div class="viz">
+            <svg id="geoSvg" viewBox="0 0 920 420" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Схема геонавигации горизонтальной скважины">
+              <defs>
+                <linearGradient id="coneGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-opacity=".38"/><stop offset="1" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="coneGradHot" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-opacity=".42"/><stop offset="1" stop-opacity="0"/>
+                </linearGradient>
+                <pattern id="hatchRed" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                  <rect width="8" height="8"/>
+                  <line x1="0" y1="0" x2="0" y2="8" stroke-width="1.4"/>
+                </pattern>
+                <clipPath id="geoClip"><rect x="24" y="26" width="872" height="370"/></clipPath>
+              </defs>
+              <g id="geoScene" clip-path="url(#geoClip)"></g>
+              <rect class="geo-frame" x="24" y="26" width="872" height="370"/>
+            </svg>
+          </div>
+          <div class="legend">
+            <span><i class="swc"></i>Траектория с моделью — в коллекторе</span>
+            <span><i class="swg"></i>Детерминированный прогноз — уход из пласта</span>
+            <span><i class="swx"></i>Зона «красного флага»</span>
+            <span><i class="swy"></i>Целевой коллектор · sweet spot</span>
+          </div>
+          <div class="tools">
+            <button type="button" id="geoPlay">▶ Проход по стволу</button>
+            <input type="range" min="0" max="1000" value="180" class="geo-slider" id="geoSlider" aria-label="Положение инструмента по стволу">
+            <button type="button" id="geoReset">Сброс</button>
+          </div>
+          <p class="disclaim">Схема-демонстрация принципа работы системы: форма пластов, разлом и кривые каротажа иллюстративные. Фактические данные проекта — целевая переменная <b>tvt</b>, ансамбли моделей, оценка неопределённости с доверительным интервалом, «красный флаг» в зонах тектонических нарушений, RMSE 6,4 на прототипе.</p>
+
+          <div class="card" style="padding:22px;margin-top:22px">
+            <div class="lbl am">Вход системы · данные каротажа и телеметрии</div>
+            <h3 style="font-size:16px">Фрагментарные и зашумленные сигналы</h3>
+            <div class="spark-grid" id="geoSparks"></div>
+            <p class="disclaim" style="margin-top:12px">Пайплайн данных разделяет физический сигнал — реальную смену породы — и инструментальный шум, отфильтровывая артефакты бурения (например, «зависание» инструмента в стволе), которые классический ML ошибочно принимает за смену литологии.</p>
+          </div>
+        </div>
+
+        <div class="geo-side">
+          <div class="card" style="padding:22px">
+            <div class="lbl">Состояние прогноза // положение инструмента</div>
+            <div class="panel-rows">
+              <div class="prow"><span>Пройдено по стволу</span><b id="gPos">—</b></div>
+              <div class="prow"><span>Уверенность модели</span><b class="hl" id="gConf">—</b></div>
+              <div class="prow"><span>Доверительный интервал</span><b id="gInt">—</b></div>
+              <div class="prow"><span>Положение относительно пласта</span><b id="gWhere">—</b></div>
+              <div class="prow blk-row">
+                <span>Ширина интервала неопределённости</span>
+                <div class="ubar"><i id="gBar"></i></div>
+              </div>
+            </div>
+            <span class="badge ok" id="gStatus">Прогноз надёжен</span>
+            <div class="lbl am" style="margin-top:16px">Рекомендация геологу-навигатору</div>
+            <p id="gRec" style="font-size:14px;color:var(--txt2)">—</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:22px">
+        <div class="card">
+          <div class="lbl rd">Проблема</div>
+          <h3>Ручная интерпретация и «продвинутые калькуляторы»</h3>
+          <ul class="chk no">
+            <li>Ключевое решение — где находится бур относительно целевого пласта-коллектора — принимается на основе ручной интерпретации данных экспертами-геологами в режиме реального времени</li>
+            <li>Недра — не «слоёный пирог»: пласты выклиниваются, изгибаются в складки, разрываются разломами</li>
+            <li>Рыночные решения детерминированы: линии тренда, экстраполяция углов падения пластов, наложение на заранее загруженные 3D-модели</li>
+            <li>Не учитывают нелинейность геологических процессов и создают иллюзию абсолютной точности: ошибаясь, модель не предупреждает — просто даёт неверную рекомендацию</li>
+            <li>Когнитивная усталость к концу 12-часовой смены снижает способность замечать тонкие, но критически важные аномалии</li>
+            <li>Цена ошибки: уход из нефтенасыщенного коллектора в водоносный горизонт или плотную породу-покрышку → непродуктивное бурение и дорогостоящая зарезка нового ствола; на шельфе и в сложных условиях Сахалина — риск сорвать весь сезон добычи</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="lbl">Решение</div>
+          <h3>Предиктивное машинное обучение с непрерывным прогнозом</h3>
+          <ul class="chk">
+            <li>Задача регрессии: прогноз целевой переменной <code>tvt</code> (True Vertical Thickness — истинная вертикальная мощность / глубина залегания маркерных пластов) для каждого метра пройденной траектории</li>
+            <li>Непрерывное прогнозирование геологического разреза вдоль ствола скважины</li>
+            <li>Пайплайн данных: фильтрация артефактов бурения, разделение физического сигнала и инструментального шума, защита от «ложных корреляций» (<code>spurious correlations</code>)</li>
+            <li>Ансамбли моделей обучаются не на «сырых» числах, а на признаках: динамика изменения свойств породы, структурные градиенты, исторический контекст бурения</li>
+            <li>Точность предсказания структурного положения пласта на несколько метров вперёд позволяет заблаговременно корректировать траекторию, оставаясь в центре наиболее проницаемой части коллектора</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid3" style="margin-top:22px">
+        <div class="card"><div class="lbl am">01 · Пайплайн данных</div><h3>Сигнал против шума</h3><p style="color:var(--muted);font-size:14px">Сложные механизмы фильтрации артефактов бурения и разделения реальной смены породы и инструментального шума. Признаки описывают динамику свойств породы, структурные градиенты и исторический контекст бурения.</p></div>
+        <div class="card"><div class="lbl am">02 · Physical Meaningfulness</div><h3>Отказ от «чёрного ящика»</h3><p style="color:var(--muted);font-size:14px">Модель физически осмысленна: она не может предсказать, что песчаник лежит непосредственно на глине, если стратиграфическая колонка региона подразумевает промежуточный алевролит. Алгоритмические ограничения заставляют модель «думать» в парадигме седиментологии и тектоники.</p></div>
+        <div class="card"><div class="lbl am">03 · Uncertainty Estimation</div><h3>Прогноз + доверительный интервал</h3><p style="color:var(--muted);font-size:14px">Уверенность на 95% — модель передаёт управление автоматике или даёт чёткую рекомендацию. В зоне тектонического нарушения, где данные каротажа противоречивы, неопределённость растёт: система маркирует зону «красным флагом» и сигнализирует о необходимости ручной верификации. Это не подменяет геолога, а фокусирует его внимание на участках, где машина сомневается.</p></div>
+      </div>
+
+      <div class="lbl" style="margin-top:30px">Эффекты внедрения</div>
+      <div class="eff">
+        <div class="card"><h4>Меньше непродуктивного бурения</h4><p>Минимизация непродуктивного бурения и отказ от дорогостоящих зарезок вторых стволов.</p></div>
+        <div class="card"><h4>Рост КИН</h4><p>Увеличение коэффициента извлечения нефти: скважина проводит больше времени в «сладких» зонах (sweet spots) коллектора, а не на периферии пласта.</p></div>
+        <div class="card"><h4>Ниже экологическая нагрузка</h4><p>Каждый метр «лишнего» бурения — тонны бурового шлама, расход химических реагентов, выбросы дизель-генераторов. Оптимизация траектории снижает углеродный след — критично для шельфовых и арктических проектов.</p></div>
+        <div class="card"><h4>«Цифровой страховщик» Сахалина</h4><p>Сложная тектоника, высокие риски и экстремальная стоимость логистических ошибок. Не требует дополнительного ПО или дорогих серверов на буровой: работает с потоками данных, которые уже передаются по защищённым каналам в корпоративные облака или локальные вычислительные контуры.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 · БПЛА ============ -->
+<section id="uav">
+  <div class="wrap">
+    <div class="shead rv"><span class="snum">03</span><h2>Проекты БПЛА: пять направлений мониторинга</h2></div>
+    <p class="ssub rv">Техзаказчик — <b>АНО НПЦ «Крылья Сахалина»</b> · данные аэрофотосъёмки и лидаров. <b>5 направлений</b> мониторинга с БПЛА · <b>9 отраслевых заказчиков и ведомств</b> · <b>1 единый контур данных</b> аэрофотосъёмки и лидаров. Пять направлений — пять отраслевых заказчиков региона. Модели детекции обучаются на данных БПЛА и переносятся между задачами.</p>
+
+    <div class="grid2 rv">
+      <div class="card"><div class="lbl">Направление 1</div><h3>Автоматическое обнаружение заторов и завалов на реках</h3><p style="color:var(--muted);font-size:13.5px">Министерство экологии и устойчивого развития · Агентство по делам ГО, ЧС и ПБ · муниципальные округа</p></div>
+      <div class="card"><div class="lbl">Направление 2</div><h3>Мониторинг распространения борщевика Сосновского</h3><p style="color:var(--muted);font-size:13.5px">Министерство сельского хозяйства и торговли · муниципальные округа</p></div>
+      <div class="card"><div class="lbl">Направление 3</div><h3>Мониторинг состояния крыш МКД и автоматическое выявление дефектов</h3><p style="color:var(--muted);font-size:13.5px">Министерство ЖКХ · Государственная жилищная инспекция · муниципальные округа</p></div>
+      <div class="card"><div class="lbl">Направление 4</div><h3>Автоматическая детекция дефектов дорожного покрытия и состояния полотна</h3><p style="color:var(--muted);font-size:13.5px">Министерство транспорта и дорожного хозяйства · муниципальные округа</p></div>
+      <div class="card" style="grid-column:1/-1"><div class="lbl">Направление 5</div><h3>Анализ данных для оценки плотности и распределения рыбы на нерестилищах</h3><p style="color:var(--muted);font-size:13.5px">Министерство по рыболовству · рыбопромышленники региона</p></div>
+    </div>
+
+    <!-- ЗАВАЛЫ НА РЕКАХ -->
+    <div class="blk rv" id="jams" style="margin-top:34px">
+      <div class="blk-head">
+        <div>
+          <div class="lbl">БПЛА // Обнаружение заторов и завалов · направление 1</div>
+          <h3>Завалы на реках — автоматизированная система детекции</h3>
+          <p>Автоматическое обнаружение заторов и завалов по данным БПЛА. Два класса объектов — завалы в воде и завалы на отмелях: детекция рамками и сегментация масками на кадрах аэрофотосъёмки. Результат облёта — интерактивная карта с маркерами, фотографии завалов и отчёт с GPS-координатами и высотами съёмки.</p>
+        </div>
+        <div class="chips">
+          <span class="chip"><b>2</b> класса объектов</span>
+          <span class="chip am"><b id="chipWater">0</b> в воде</span>
+          <span class="chip am"><b id="chipShoal">0</b> на отмели</span>
+          <span class="chip"><b>HTML</b> карта + <b>Excel</b></span>
+        </div>
+      </div>
+
+      <div class="jam-grid">
+        <div>
+          <div class="jam-map">
+            <svg id="jamMap" viewBox="0 0 480 600" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Схема карты завалов на реке">
+              <defs>
+                <pattern id="grid100" width="45.014" height="45.014" patternUnits="userSpaceOnUse">
+                  <path d="M 45.014 0 L 0 0 0 45.014" fill="none" stroke-width="0.8"/>
+                </pattern>
+                <linearGradient id="waterGrad" x1="0" y1="1" x2="0.4" y2="0">
+                  <stop offset="0"/><stop offset="0.5"/><stop offset="1"/>
+                </linearGradient>
+                <marker id="trajArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z"/>
+                </marker>
+                <clipPath id="plotClip"><rect x="30" y="24" width="420" height="552" rx="10"/></clipPath>
+              </defs>
+              <rect class="plotbg" x="30" y="24" width="420" height="552" rx="10"/>
+              <g clip-path="url(#plotClip)">
+                <rect x="30" y="24" width="420" height="552" fill="url(#grid100)"/>
+                <ellipse class="shoal" cx="392" cy="392" rx="30" ry="20" transform="rotate(-24 392 392)"/>
+                <ellipse class="shoal" cx="98" cy="78" rx="26" ry="16" transform="rotate(38 98 78)"/>
+                <path class="riverGlow" d="M300 610L302 602L305 590L309 577L313 562L318 548L323 535L326 528L332 519L337 514L344 507L352 501L356 496L360 492L364 487L367 478L368 471L368 464L368 457L367 449L365 441L363 433L361 424L358 416L355 407L352 398L348 389L344 380L338 371L333 361L327 351L321 341L315 331L309 321L304 311L300 300L297 289L294 277L293 264L291 251L290 238L288 226L286 214L284 203L281 193L276 184L270 177L263 171L255 167L247 163L238 160L228 157L219 155L211 152L203 149L196 146L190 143L185 140L180 138L176 135L172 133L168 130L164 127L159 123L154 118L148 112L141 104L133 95L123 84L114 73L104 61L95 49L86 38L78 28L71 20L66 14"/>
+                <path class="river" d="M300 610L302 602L305 590L309 577L313 562L318 548L323 535L326 528L332 519L337 514L344 507L352 501L356 496L360 492L364 487L367 478L368 471L368 464L368 457L367 449L365 441L363 433L361 424L358 416L355 407L352 398L348 389L344 380L338 371L333 361L327 351L321 341L315 331L309 321L304 311L300 300L297 289L294 277L293 264L291 251L290 238L288 226L286 214L284 203L281 193L276 184L270 177L263 171L255 167L247 163L238 160L228 157L219 155L211 152L203 149L196 146L190 143L185 140L180 138L176 135L172 133L168 130L164 127L159 123L154 118L148 112L141 104L133 95L123 84L114 73L104 61L95 49L86 38L78 28L71 20L66 14"/>
+                <path class="riverFlow" d="M300 610L302 602L305 590L309 577L313 562L318 548L323 535L326 528L332 519L337 514L344 507L352 501L356 496L360 492L364 487L367 478L368 471L368 464L368 457L367 449L365 441L363 433L361 424L358 416L355 407L352 398L348 389L344 380L338 371L333 361L327 351L321 341L315 331L309 321L304 311L300 300L297 289L294 277L293 264L291 251L290 238L288 226L286 214L284 203L281 193L276 184L270 177L263 171L255 167L247 163L238 160L228 157L219 155L211 152L203 149L196 146L190 143L185 140L180 138L176 135L172 133L168 130L164 127L159 123L154 118L148 112L141 104L133 95L123 84L114 73L104 61L95 49L86 38L78 28L71 20L66 14"/>
+                <path class="traj" d="M 325.8,528.0 L 367.0,477.9 L 387.6,392.7 L 92.4,72.0 L 274.3,182.2" marker-end="url(#trajArrow)"/>
+                <g id="jamCross">
+                  <line class="cross" id="crossV" x1="0" y1="0" x2="0" y2="576"/>
+                  <line class="cross" id="crossH" x1="30" y1="0" x2="0" y2="0"/>
+                  <text class="axtxt" id="crossLon" x="0" y="590"></text>
+                  <text class="axtxt" id="crossLat" x="34" y="0"></text>
+                </g>
+                <g id="jamMarkers"></g>
+              </g>
+              <rect class="plotframe" x="30" y="24" width="420" height="552" rx="10"/>
+              <g transform="translate(424,52)">
+                <path d="M0,-14 L5,6 L0,1 L-5,6 Z" fill="var(--compass)"/>
+                <text class="compassN" x="0" y="20" text-anchor="middle">N ↑</text>
+              </g>
+              <g transform="translate(48,556)" stroke="var(--lbl-gl)" stroke-width="1.6">
+                <line x1="0" y1="0" x2="45.014" y2="0"/>
+                <line x1="0" y1="-4" x2="0" y2="4"/>
+                <line x1="45.014" y1="-4" x2="45.014" y2="4"/>
+              </g>
+              <text class="ui-txt" x="102" y="559">100 М · СЕТКА 100 М</text>
+              <text class="ui-txt" x="36" y="16">ТРАЕКТОРИЯ ПОЛЁТА БПЛА · - - -</text>
+            </svg>
+          </div>
+          <div class="legend">
+            <span><i class="swc"></i>Класс: завал в воде</span>
+            <span><i class="swa"></i>Класс: завал на отмели</span>
+            <span><i class="swr"></i>Маршрут БПЛА</span>
+          </div>
+          <div class="tools">
+            <button type="button" id="jamPrev">← Пред</button>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:.1em;font-weight:700" id="jamPos">1 / 5</span>
+            <button type="button" id="jamNext">След →</button>
+            <span class="hint">клик по маркеру — карточка объекта</span>
+          </div>
+
+          <!-- ФОТО ЗАВАЛА: отдельный блок слева -->
+          <div class="card" style="margin-top:22px;padding:22px">
+            <div class="lbl">Фотография завала · локальный файл</div>
+            <h3 style="font-size:16px">Кадр облёта по выбранному объекту</h3>
+            
+            <div class="media-slot" data-id="фото завала" data-src="media/river.jpg" data-hint="фото завала · GIF · видео"></div>
+          </div>
+        </div>
+
+        <div class="jam-side">
+          <div class="card" style="padding:22px">
+            <div class="lbl">Интерактивная HTML-карта // клик по маркеру</div>
+            <h3 id="jamTitle" style="font-family:'JetBrains Mono',monospace;font-size:16px">DJI_0001.JPG</h3>
+            <div class="panel-rows">
+              <div class="prow"><span>Широта</span><b id="pLat">—</b></div>
+              <div class="prow"><span>Долгота</span><b id="pLon">—</b></div>
+              <div class="prow"><span>Высота съёмки</span><b id="pAlt">—</b></div>
+              <div class="prow"><span>До следующего завала</span><b class="hl" id="pNext">—</b></div>
+              <div class="prow"><span>Кадр облёта</span><b id="pFrame">—</b></div>
+            </div>
+            <div class="lbl am">Класс объекта — переключается</div>
+            <div class="cls-toggle">
+              <button type="button" class="w" data-cls="water">Завал в воде</button>
+              <button type="button" class="s" data-cls="shoal">Завал на отмели</button>
+            </div>
+            <ul class="chk">
+              <li>Маркеры завалов на карте региона</li>
+              <li>Клик на маркер открывает фото и координаты</li>
+              <li>Траектория полёта сохраняется в отчёте</li>
+            </ul>
+          </div>
+
+          <div class="card" style="padding:22px">
+            <div class="lbl am">Excel-отчёт по каждому завалу</div>
+            <h3 style="font-size:16px">Отчёт передаётся в ведомства</h3>
+            <div style="overflow-x:auto;border:1px solid var(--line);border-radius:10px">
+              <table class="xl-table">
+                <thead><tr><th>ID</th><th>Широта</th><th>Долгота</th><th>Высота, м</th><th>До след., м</th></tr></thead>
+                <tbody id="jamTable"></tbody>
+              </table>
+            </div>
+            <ul class="chk" style="margin-top:16px">
+              <li>Каждая запись — фотография завала с координатами и высотой съёмки</li>
+              <li>Отчёт передаётся в Министерство экологии и устойчивого развития и Агентство по делам ГО, ЧС и ПБ</li>
+              <li>Отчётность формируется автоматически сразу после обработки облёта</li>
+            </ul>
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:22px">
+        <div class="card">
+          <div class="lbl">Детекция рамками — YOLO B-BOXES</div>
+          <h3>Каждый завал — рамка с уровнем уверенности модели</h3>
+          <div class="media-slot" data-id="b-box" data-src="media/b-box.jpg" data-hint="b-box · GIF · видео"></div>
+        </div>
+        <div class="card">
+          <div class="lbl">Сегментация — YOLO SEGMENTATION</div>
+          <h3>Контур завала маской — точная площадь и границы объекта</h3>
+          <div class="media-slot" data-id="segment" data-src="media/segment.mp4" data-hint="segment · GIF · видео"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 · ДЕФЕКТЫ ============ -->
+<section id="media-gallery" class="extra-media"><div class="wrap"><div class="section-label">КОМПЬЮТЕРНОЕ ЗРЕНИЕ / МАТЕРИАЛЫ ПРОЕКТА</div><div class="shead"><h2>Детали, которые видит модель</h2></div><p class="ssub">Дополнительные материалы: сегментация объектов и обнаружение завалов на видеозаписи.</p><div class="grid2"><div class="card"><h3>Сегментация объектов</h3><div class="media-slot" data-id="seg-photo" data-src="media/seg.jpg" data-hint="Сегментация завалов на снимке реки"></div></div><div class="card"><h3>Обнаружение объектов в видео</h3><div class="media-slot" data-id="bbox-video" data-src="media/b-boxes.mp4" data-hint="Обнаружение завалов на видеозаписи"></div></div></div></div></section>
+<section id="detect" style="padding-top:0">
+  <div class="wrap">
+    <div class="shead rv"><span class="snum">04</span><h2>Автоматическое выявление дефектов</h2></div>
+    <p class="ssub rv">Мониторинг состояния крыш МКД и автоматическая детекция дефектов дорожного покрытия и состояния полотна. Для каждого типа дефекта обучается отдельная специализированная нейросеть. Данные поступают с дронов (лидар) и самолётов (фотографии). Отчётность формируется автоматически сразу после обработки облёта: <b>HTML — карта для анализа, Excel — для ведомственной отчётности</b>.</p>
+
+    <div class="grid2 rv">
+      <div class="card">
+        <div class="lbl">Повреждения крыш — классы детекции</div>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Заказчики: Министерство ЖКХ · Государственная жилищная инспекция · муниципальные округа</p>
+        <ul class="chk">
+          <li>Вентиляционные шахты <code>all_shafts</code></li>
+          <li>Кровельные проёмы / повреждения проёмов <code>all_opening_damage</code></li>
+          <li>Кровельный аэратор <code>Roof aerator</code></li>
+          <li>Кровельный дефлектор <code>Roof deflector</code></li>
+          <li>Коррозия кровельного покрытия <code>Roof corrosion</code></li>
+          <li>Биологическое повреждение / биопоражение <code>Biological damage</code></li>
+          <li>Вздутие кровельного покрытия <code>Roof swelling / blistering</code></li>
+          <li>Отсутствующий вентиляционный колпак <code>Missing ventilation cap</code></li>
+        </ul>
+        <div class="media-slot" data-id="roof" data-src="media/roof.gif" data-hint="Фото / GIF: дефекты крыш"></div>
+      </div>
+      <div class="card">
+        <div class="lbl">Повреждения дорог — целевые дефекты</div>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Техзаказчик: Министерство транспорта и дорожного хозяйства · муниципальные округа. Разработка полуавтоматического offline-контура анализа данных дорог, который выявляет все целевые дефекты:</p>
+        <ul class="chk">
+          <li>Трещины</li>
+          <li>Сетка трещин</li>
+          <li>Яма</li>
+          <li>Колея</li>
+          <li>Наклон опоры освещения</li>
+        </ul>
+        <div class="media-slot" data-id="road" data-src="media/road.mp4" data-hint="Фото / GIF: дефекты дорог"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 · КОМАНДА ============ -->
+<section id="team">
+  <div class="wrap">
+    <div class="shead rv"><span class="snum">05</span><h2>О центре: команда</h2></div>
+    <p class="ssub rv">Структура команды · <b>20 человек</b> · проектный офис при минцифры Сахалинской области. Команда полного цикла — от разметки данных до промышленной эксплуатации моделей. Центр ИИ целенаправленно усиливает команду за счёт привлечения международных экспертов высокого класса.</p>
+    <div class="roles rv">
+      <div class="role"><b>2</b><h4>Senior Data Scientist</h4><p>Ведущие исследователи данных, экспертная разработка архитектур ML-моделей.</p></div>
+      <div class="role"><b>4</b><h4>Middle-специалиста</h4><p>Ключевые разработчики ML: компьютерное зрение, NLP, промышленная аналитика.</p></div>
+      <div class="role"><b>5</b><h4>Junior-специалиста</h4><p>Молодые специалисты: подготовка данных, тестирование моделей.</p></div>
+      <div class="role"><b>5</b><h4>Руководителей проектов</h4><p>Специалисты проектного офиса при минцифры Сахалинской области.</p></div>
+      <div class="role"><b>1</b><h4>Senior DevOps-инженер</h4><p>Оптимизация инфраструктуры разработки, CI/CD, развёртывание моделей.</p></div>
+      <div class="role"><b>2</b><h4>Разработчика и аналитика</h4><p>Frontend и backend, анализ бизнес-процессов при минцифры Сахалинской области.</p></div>
+    </div>
+    <div class="card rv" style="margin-top:22px">
+      <div class="lbl am">~20 стажёров Школы 21 · международная экспертиза</div>
+      <p style="color:var(--muted);font-size:14.5px">Сквозная интеграция со Школой21 — стажировки проходят на базе Центра ИИ и становятся входной точкой в команду. Кадровый контур пополняется за счёт Школы21 и студентов СахГУ. Центр ИИ целенаправленно усиливает команду за счёт привлечения международных экспертов высокого класса.</p>
+    </div>
+  </div>
+</section>
+
+</main><footer>
+  <div class="wrap">
+    <div class="f1">САХАЛИНТЕХ · 2026</div>
+    <div class="f2">Благодарим за внимание!</div>
+    <div class="f3">Сахалинский центр искусственного интеллекта · Сахалинский государственный университет · г. Южно-Сахалинск, ул. Леонова, 38 · 8-4242-67-2120 · v.basargina@sakhalin.gov.ru</div>
+    <div class="f4">© 2026 СахЦентр ИИ · предиктивная аналитика v.3.3 / v.3.5 · status: operational</div>
+  </div>
+</footer>
+
+<!-- ЛАЙТБОКС -->
+<div class="lb" id="lightbox" aria-hidden="true">
+  <div class="lb-backdrop" data-close></div>
+  <div class="lb-top">
+    <div class="lb-meta"><b id="lbName">—</b><span id="lbCap"></span></div>
+    <div class="lb-ctrl">
+      <button type="button" id="lbPrev" title="Предыдущее (←)">←</button>
+      <span class="lb-pos" id="lbCount">1 / 1</span>
+      <button type="button" id="lbNext" title="Следующее (→)">→</button>
+      <span class="lb-sep"></span>
+      <button type="button" id="lbOut" title="Уменьшить (−)">−</button>
+      <span class="lb-pos" id="lbZoom">100%</span>
+      <button type="button" id="lbIn" title="Увеличить (+)">+</button>
+      <button type="button" id="lbFit" title="Вписать / 1:1 (двойной клик)">Вписать</button>
+      <button type="button" id="lbClose" class="lb-x" data-close title="Закрыть (Esc)">✕</button>
+    </div>
+  </div>
+  <div class="lb-stage"><div class="lb-media smooth" id="lbMedia"></div></div>
+  <div class="lb-hint">колесо мыши — масштаб · перетаскивание — панорама · двойной клик — 1:1 / вписать · ← → — материалы · Esc — закрыть</div>
+</div>
+
+<script>
+/* ==================================================================
+   ПУТИ К ЛОКАЛЬНЫМ МЕДИА-ФАЙЛАМ — ЗАПОЛНИТЕ ЗДЕСЬ
+   ключ = data-id слота, значение = путь к файлу относительно HTML
+   ================================================================== */
+var MEDIA_SOURCES = {
+  'jam-photo'   : '',   // например 'media/zavaly/foto_zavala.jpg'
+  'rivers-bbox' : '',   // например 'media/zavaly/detect_bbox.gif'
+  'rivers-seg'  : '',   // например 'media/zavaly/segmentation.mp4'
+  'det-roofs'   : '',   // например 'media/defects/roof_01.png'
+  'det-roads'   : ''    // например 'media/defects/road_crack.jpg'
+};
+
+/* ============ ТЕМА ============ */
+(function(){
+  'use strict';
+  var KEY='sac_theme_v1', btn=document.getElementById('themeBtn');
+  function apply(t){
+    document.documentElement.setAttribute('data-theme',t);
+    btn.textContent=t==='dark'?'Тема: тёмная':'Тема: светлая';
+    try{localStorage.setItem(KEY,t);}catch(e){}
+    window.dispatchEvent(new CustomEvent('themechange',{detail:t}));
+  }
+  var saved='dark';
+  try{saved=localStorage.getItem(KEY)||'dark';}catch(e){}
+  apply(saved);
+  btn.addEventListener('click',function(){
+    apply(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');
+  });
+})();
+
+/* ============ медиа-слоты + лайтбокс ============ */
+(function(){
+  'use strict';
+  var LS_MEDIA='sac_media_v1';
+  function loadJSON(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
+  function saveJSON(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+  var mediaMap=loadJSON(LS_MEDIA,{});
+
+  var VIDEO_EXT=['mp4','webm','ogv','ogg','mov','m4v'];
+  function extOf(src){
+    var clean=String(src).split('?')[0].split('#')[0];
+    var parts=clean.split('.');
+    return parts.length>1?parts.pop().toLowerCase():'';
+  }
+  function typeOf(src,forced){
+    if(forced)return forced;
+    return VIDEO_EXT.indexOf(extOf(src))>=0?'video/mp4':'image/'+(extOf(src)||'jpeg');
+  }
+  function nameOf(src){
+    var clean=String(src).split('?')[0].split('#')[0];
+    var parts=clean.split('/');
+    return decodeURIComponent(parts[parts.length-1]||clean);
+  }
+
+  /* ---------- лайтбокс ---------- */
+  var LB={root:document.getElementById('lightbox'),media:document.getElementById('lbMedia'),
+    name:document.getElementById('lbName'),cap:document.getElementById('lbCap'),
+    count:document.getElementById('lbCount'),zoomLbl:document.getElementById('lbZoom'),
+    items:[],idx:0,z:1,tx:0,ty:0,drag:null};
+  var registry=[];
+
+  function applyT(smooth){
+    LB.media.classList.toggle('smooth',!!smooth);
+    LB.media.style.transform='translate('+LB.tx+'px,'+LB.ty+'px) scale('+LB.z+')';
+    LB.zoomLbl.textContent=Math.round(LB.z*100)+'%';
+  }
+  function resetT(){LB.z=1;LB.tx=0;LB.ty=0;applyT(true);}
+  function setZoom(nz){LB.z=Math.min(8,Math.max(.3,nz));applyT(false);}
+  function fillStage(item){
+    LB.media.innerHTML='';
+    var el;
+    if(item.type.indexOf('video')===0){
+      el=document.createElement('video');el.src=item.src;el.controls=true;el.autoplay=true;el.loop=true;el.setAttribute('playsinline','');
+    }else{
+      el=document.createElement('img');el.src=item.src;el.alt=item.name||'';el.draggable=false;
+    }
+    LB.media.appendChild(el);
+    LB.name.textContent=item.name||'медиа-файл';
+    LB.cap.textContent=(item.capNode&&item.capNode.textContent)||'';
+    LB.count.textContent=(LB.idx+1)+' / '+LB.items.length;
+    resetT();
+  }
+  function openLB(index){
+    LB.items=registry.filter(function(r){return r.src;});
+    if(!LB.items.length)return;
+    LB.idx=Math.max(0,Math.min(index,LB.items.length-1));
+    fillStage(LB.items[LB.idx]);
+    LB.root.classList.add('open');LB.root.setAttribute('aria-hidden','false');
+    document.body.classList.add('lb-open');
+  }
+  function closeLB(){
+    LB.root.classList.remove('open');LB.root.setAttribute('aria-hidden','true');
+    document.body.classList.remove('lb-open');
+    var v=LB.media.querySelector('video');if(v){try{v.pause();}catch(e){}}
+    LB.media.innerHTML='';
+  }
+  function stepLB(d){if(!LB.items.length)return;LB.idx=(LB.idx+d+LB.items.length)%LB.items.length;fillStage(LB.items[LB.idx]);}
+  LB.root.querySelectorAll('[data-close]').forEach(function(b){b.addEventListener('click',closeLB);});
+  document.getElementById('lbPrev').addEventListener('click',function(){stepLB(-1);});
+  document.getElementById('lbNext').addEventListener('click',function(){stepLB(1);});
+  document.getElementById('lbIn').addEventListener('click',function(){setZoom(LB.z*1.25);});
+  document.getElementById('lbOut').addEventListener('click',function(){setZoom(LB.z/1.25);});
+  function toggleFit(){if(LB.z===1&&LB.tx===0&&LB.ty===0){LB.z=2.5;applyT(true);}else{resetT();}}
+  document.getElementById('lbFit').addEventListener('click',toggleFit);
+  LB.root.addEventListener('wheel',function(e){
+    if(!LB.root.classList.contains('open'))return;
+    e.preventDefault();setZoom(LB.z*(e.deltaY<0?1.12:1/1.12));
+  },{passive:false});
+  LB.media.addEventListener('dblclick',toggleFit);
+  LB.media.addEventListener('pointerdown',function(e){
+    if(e.button!==0)return;
+    LB.drag={x:e.clientX,y:e.clientY,tx:LB.tx,ty:LB.ty};LB.media.classList.add('grabbing');
+    try{LB.media.setPointerCapture(e.pointerId);}catch(err){}
+  });
+  LB.media.addEventListener('pointermove',function(e){
+    if(!LB.drag)return;
+    LB.tx=LB.drag.tx+(e.clientX-LB.drag.x);LB.ty=LB.drag.ty+(e.clientY-LB.drag.y);applyT(false);
+  });
+  ['pointerup','pointercancel','pointerleave'].forEach(function(ev){
+    LB.media.addEventListener(ev,function(){LB.drag=null;LB.media.classList.remove('grabbing');});
+  });
+  document.addEventListener('keydown',function(e){
+    if(!LB.root.classList.contains('open'))return;
+    if(e.key==='Escape'){closeLB();e.preventDefault();}
+    else if(e.key==='ArrowRight'){stepLB(1);e.preventDefault();}
+    else if(e.key==='ArrowLeft'){stepLB(-1);e.preventDefault();}
+    else if(e.key==='+'||e.key==='='){setZoom(LB.z*1.25);e.preventDefault();}
+    else if(e.key==='-'||e.key==='_'){setZoom(LB.z/1.25);e.preventDefault();}
+    else if(e.key==='0'){resetT();e.preventDefault();}
+  });
+
+  var ICON='<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M3 16l5-4 4 3 4-4 5 5"/><path d="M12 2v2M9 2h6"/></svg>';
+
+  function buildSlot(el){
+    var id=el.getAttribute('data-id');
+    var hint=el.getAttribute('data-hint')||'Фото · GIF · видео';
+    var preset=(el.getAttribute('data-src')||'').trim() || (window.MEDIA_SOURCES&&MEDIA_SOURCES[id]||'') || '';
+    var presetType=el.getAttribute('data-type')||'';
+
+    el.innerHTML='';
+    var frame=document.createElement('div');frame.className='ms-frame';
+    var drop=document.createElement('button');drop.type='button';drop.className='ms-drop';
+    drop.innerHTML=ICON+
+      '<span class="t1">Вставить медиа</span>'+
+      '<span class="t2">'+hint+'</span>'+
+      '<span class="t3"></span>'+
+      '<span class="t4">или пропишите путь в коде: data-src="media/файл.jpg"</span>';
+    var mediaBox=document.createElement('div');mediaBox.className='ms-media';mediaBox.hidden=true;mediaBox.title='Открыть и увеличить';
+    var tools=document.createElement('div');tools.className='ms-tools';tools.hidden=true;
+    tools.innerHTML='<span class="nm"></span><span class="src" hidden></span><button type="button" class="zoom">⤢ Увеличить</button><button type="button" class="rp">Заменить</button><button type="button" class="rm">Убрать</button>';
+    var inp=document.createElement('input');inp.type='file';inp.accept='image/*,video/*';inp.hidden=true;
+    frame.appendChild(drop);frame.appendChild(mediaBox);frame.appendChild(tools);frame.appendChild(inp);
+    var cap=document.createElement('div');cap.className='ms-cap';cap.contentEditable='false';cap.setAttribute('data-ph','Подпись (необязательно)');
+    cap.textContent=(mediaMap[id]&&mediaMap[id].cap)||'';
+    el.appendChild(frame);el.appendChild(cap);
+
+    var rec={id:id,src:null,type:'',name:'',capNode:cap,preset:preset};
+    registry.push(rec);
+    var nmEl=tools.querySelector('.nm'), srcEl=tools.querySelector('.src');
+
+    function setState(state){ /* 'empty' | 'filled' | 'err' */
+      el.classList.toggle('filled',state==='filled');
+      el.classList.toggle('empty',state!=='filled');
+      el.classList.toggle('err',state==='err');
+      drop.hidden=(state==='filled');
+      mediaBox.hidden=(state!=='filled');
+      tools.hidden=(state!=='filled');
+    }
+    function render(src,type,name,isPreset){
+      mediaBox.innerHTML='';
+      var node;
+      if(type.indexOf('video')===0){
+        node=document.createElement('video');node.src=src;node.controls=true;node.muted=true;node.loop=true;node.autoplay=false;node.preload="metadata";
+        node.setAttribute('playsinline','');node.setAttribute('muted','');
+      }else{
+        node=document.createElement('img');node.src=src;node.alt=hint;node.loading='lazy';
+      }
+      node.addEventListener('error',function(){
+        rec.src=null;mediaBox.innerHTML='';
+        setState('err');
+        drop.querySelector('.t3').textContent='не удалось загрузить: '+src;
+      });
+      mediaBox.appendChild(node);
+      nmEl.textContent=name||'';
+      srcEl.hidden=!isPreset;
+      srcEl.textContent=isPreset?'из кода':'файл';
+      rec.src=src;rec.type=type;rec.name=name||'';
+      setState('filled');
+    }
+    function clearSlot(msg){
+      mediaBox.innerHTML='';rec.src=null;
+      setState(msg?'err':'empty');
+      drop.querySelector('.t3').textContent=msg||'';
+    }
+    function handleFile(file){
+      if(!file)return;
+      var isImg=file.type.indexOf('image')===0, isVid=file.type.indexOf('video')===0;
+      if(!isImg&&!isVid){alert('Поддерживаются изображения (включая GIF) и видео.');return;}
+      var saved=mediaMap[id]||{};saved.name=file.name;saved.type=file.type;delete saved.data;
+      mediaMap[id]=saved;saveJSON(LS_MEDIA,mediaMap);
+      if(isImg&&file.size<1500000){
+        var fr=new FileReader();
+        fr.onload=function(){saved.data=fr.result;saveJSON(LS_MEDIA,mediaMap);render(fr.result,file.type,file.name,false);};
+        fr.readAsDataURL(file);
+      }else{render(URL.createObjectURL(file),file.type,file.name,false);}
+    }
+    function openInLB(){
+      if(!rec.src)return;
+      var live=registry.filter(function(r){return r.src;});
+      var ix=live.indexOf(rec);openLB(ix<0?0:ix);
+    }
+
+    drop.addEventListener('click',function(){inp.click();});
+    mediaBox.addEventListener('click',openInLB);
+    tools.querySelector('.zoom').addEventListener('click',openInLB);
+    tools.querySelector('.rp').addEventListener('click',function(){inp.click();});
+    tools.querySelector('.rm').addEventListener('click',function(){
+      delete mediaMap[id];saveJSON(LS_MEDIA,mediaMap);
+      clearSlot('');
+      drop.querySelector('.t4').textContent=preset
+        ? 'в коде прописан путь: '+preset+' — он вернётся после перезагрузки'
+        : 'или пропишите путь в коде: data-src="media/файл.jpg"';
+    });
+    inp.addEventListener('change',function(){handleFile(inp.files[0]);inp.value='';});
+    ['dragenter','dragover'].forEach(function(ev){frame.addEventListener(ev,function(e){e.preventDefault();frame.classList.add('drag');});});
+    ['dragleave','drop'].forEach(function(ev){frame.addEventListener(ev,function(e){e.preventDefault();frame.classList.remove('drag');});});
+    frame.addEventListener('drop',function(e){if(e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0]);});
+    cap.addEventListener('input',function(){
+      var r=mediaMap[id]||{};r.cap=cap.textContent;mediaMap[id]=r;saveJSON(LS_MEDIA,mediaMap);
+      if(LB.root.classList.contains('open')){var it=LB.items[LB.idx];if(it&&it.id===id)LB.cap.textContent=cap.textContent;}
+    });
+
+    /* приоритет: путь из кода → сохранённое в браузере → пусто */
+    if(preset){
+      render(preset,typeOf(preset,presetType),nameOf(preset),true);
+    }else{
+      var stored=mediaMap[id];
+      if(stored&&stored.data){render(stored.data,stored.type||'image/',stored.name,false);}
+      else{
+        clearSlot('');
+        var prev=mediaMap[id];
+        drop.querySelector('.t3').textContent=(prev&&prev.name)?('ранее: '+prev.name):'';
+      }
+    }
+  }
+  document.querySelectorAll('.media-slot').forEach(buildSlot);
+
+  /* ---------- прочее ---------- */
+  var prog=document.getElementById('prog');
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement,p=h.scrollTop/(h.scrollHeight-h.clientHeight||1);
+    prog.style.width=(p*100)+'%';
+  },{passive:true});
+
+  var ro=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}});
+  },{threshold:.06});
+  document.querySelectorAll('.rv').forEach(function(n){ro.observe(n);});
+
+  var secs=['industry','top8','geo','uav','jams','detect','team'].map(function(i){return document.getElementById(i);});
+  var no=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        document.querySelectorAll('nav.links a').forEach(function(a){
+          a.classList.toggle('act',a.getAttribute('href')==='#'+e.target.id);
+        });
+      }
+    });
+  },{rootMargin:'-40% 0px -55% 0px'});
+  secs.forEach(function(s){if(s)no.observe(s);});
+})();
+
+/* ============ КЕЙС 01 · ПОТОК ТЕЛЕМЕТРИИ ДВС ============ */
+(function(){
+  'use strict';
+  var body=document.getElementById('conBody');
+  if(!body)return;
+  var LINES=[
+    {t:'00:00:00',m:'Инициализация системы мониторинга...',k:'info'},
+    {t:'00:00:01',m:'Подключение к датчикам ДВС установлено',k:'info'},
+    {t:'00:00:02',m:'oil_idle_low = 270 kPa',k:'ok'},
+    {t:'00:00:02',m:'oil_load_min = 440 kPa',k:'ok'},
+    {t:'00:00:03',m:'turbo_load = 420 kPa',k:'ok'},
+    {t:'00:00:03',m:'oil_torque_ratio = 2.20',k:'ok'},
+    {t:'00:00:04',m:'crankcase = 1.2 kPa',k:'ok'},
+    {t:'00:00:04',m:'crankcase_oil_ratio = 0.25 %',k:'ok'},
+    {t:'00:00:05',m:'crankcase_cv_load = 95 %',k:'ok'},
+    {t:'00:00:05',m:'health_index = 3.5',k:'nm'},
+    {t:'00:00:06',m:'Ожидание запуска симуляции...',k:'info'}
+  ];
+  var clockEl=document.getElementById('conClock');
+  var idx=0, sec=0, runTimer=null, clockTimer=null, running=true;
+  function pad(n){return (n<10?'0':'')+n;}
+  function pushLine(L){
+    var d=document.createElement('div');
+    var tag=L.k==='ok'?'[OK]':(L.k==='nm'?'[NORM]':'');
+    d.innerHTML='<span class="ts">['+L.t+']</span> <span class="'+L.k+'">'+L.m+'</span>'+(tag?' <span class="'+(L.k==='nm'?'nm':'ok')+'">'+tag+'</span>':'');
+    body.appendChild(d);
+    while(body.children.length>11){body.removeChild(body.firstChild);}
+  }
+  function tick(){pushLine(LINES[idx]);idx=(idx+1)%LINES.length;if(idx===0){body.innerHTML='';}}
+  function start(){
+    if(runTimer)return;
+    runTimer=setInterval(tick,880);
+    clockTimer=setInterval(function(){sec++;clockEl.textContent=pad(Math.floor(sec/3600))+':'+pad(Math.floor(sec/60)%60)+':'+pad(sec%60);},1000);
+  }
+  function stop(){clearInterval(runTimer);clearInterval(clockTimer);runTimer=null;clockTimer=null;}
+  document.getElementById('conPlay').addEventListener('click',function(){
+    running=!running;this.textContent=running?'⏸ Пауза':'▶ Запуск';running?start():stop();
+  });
+  document.getElementById('conReset').addEventListener('click',function(){
+    body.innerHTML='';idx=0;sec=0;clockEl.textContent='00:00:00';
+    if(!running){running=true;document.getElementById('conPlay').textContent='⏸ Пауза';}
+    stop();start();
+  });
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting&&running)start();
+      if(!e.isIntersecting)stop();
+    });
+  },{threshold:.2}).observe(body);
+})();
+
+/* ============ КЕЙС 01 · HEALTH INDEX ============ */
+(function(){
+  'use strict';
+  var rowsBox=document.getElementById('hiRows');
+  if(!rowsBox)return;
+  var KEY='sac_hi_v1';
+  var PARAMS=[
+    {code:'il_idle_low',    name:'Давление масла на низком ХХ',        norm:'170–250 кПа', w:18, cause:'&lt; 170 → износ насоса, забит фильтр',      check:'Уровень/вязкость масла, замер манометром'},
+    {code:'oil_load_min',   name:'Мин. давление масла под нагрузкой',   norm:'300–460 кПа', w:22, cause:'&lt; 300 → износ подшипников, утечка',       check:'Замер под нагрузкой, проверка на стружку'},
+    {code:'crankcase',      name:'Давление картерных газов',            norm:'&lt; 0,1 кПа', w:20, cause:'&gt; 0,1 → износ ЦПГ, прорыв газов',          check:'Расход масла на угар, компрессия'},
+    {code:'turbo_load',     name:'Давление турбонаддува под нагрузкой', norm:'150–250 кПа', w:20, cause:'&lt; 150 → износ турбины, утечка во впуске',  check:'Осмотр патрубков, воздушный фильтр'},
+    {code:'temp_delta_load',name:'ΔT: ОЖ – впускной коллектор',         norm:'15–35°C',     w:18, cause:'&lt; 15 или &gt; 35 → забит радиатор, термостат', check:'Уровень антифриза, чистота радиатора'}
+  ];
+  var ST_FACTOR=[0,0.4,1];
+  var states=[0,0,0,0,0];
+  try{var sv=JSON.parse(localStorage.getItem(KEY)||'null');if(sv&&sv.length===5)states=sv;}catch(e){}
+
+  var arc=document.getElementById('hiArc'),num=document.getElementById('hiNum'),recs=document.getElementById('hiRecs');
+  var liveIdx=document.getElementById('hiLive'),liveState=document.getElementById('hiLiveState');
+  var ARC_LEN=386.4;
+  function cssv(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+
+  PARAMS.forEach(function(p,i){
+    var row=document.createElement('div');row.className='hi-row';
+    row.innerHTML='<div class="l1"><code>'+p.code+'</code><span class="nm">'+p.name+'</span><span class="nr">норма: '+p.norm+'</span></div>'+
+      '<div class="seg"><button type="button" data-st="0">норма</button><button type="button" data-st="1">на границе</button><button type="button" data-st="2">отклонение</button></div>'+
+      '<div class="l2">→ '+p.cause+'<br>проверить: '+p.check+'</div>';
+    row.querySelectorAll('.seg button').forEach(function(b){
+      b.addEventListener('click',function(){
+        states[i]=parseInt(b.getAttribute('data-st'),10);
+        try{localStorage.setItem(KEY,JSON.stringify(states));}catch(e){}
+        render();
+      });
+    });
+    rowsBox.appendChild(row);
+  });
+
+  function render(){
+    var penalty=0, dev=[];
+    PARAMS.forEach(function(p,i){
+      penalty+=p.w*ST_FACTOR[states[i]];
+      if(states[i]>0)dev.push({p:p,st:states[i]});
+    });
+    var idx=Math.max(0,Math.min(100,Math.round(100-penalty)));
+    arc.setAttribute('stroke-dasharray',(ARC_LEN*idx/100).toFixed(1)+' 515.2');
+    var col=idx>=85?cssv('--ok-solid'):(idx>=60?cssv('--warn-solid'):cssv('--bad-solid'));
+    var fg =idx>=85?cssv('--ok-fg')   :(idx>=60?cssv('--warn-fg')   :cssv('--bad-fg'));
+    arc.setAttribute('stroke',col);
+    num.textContent=idx+'%';
+
+    var live=(3.5*idx/100).toFixed(1);
+    liveIdx.textContent=live;liveIdx.style.color=col;
+    liveState.textContent=idx>=85?'● НОРМА':(idx>=60?'● ВНИМАНИЕ':'● КРИТИЧНО');
+    liveState.style.color=fg;
+
+    Array.prototype.forEach.call(rowsBox.children,function(row,i){
+      row.classList.remove('dev','bad');
+      if(states[i]===1)row.classList.add('dev');
+      if(states[i]===2)row.classList.add('dev','bad');
+      row.querySelectorAll('.seg button').forEach(function(b){
+        b.classList.toggle('on',parseInt(b.getAttribute('data-st'),10)===states[i]);
+      });
+    });
+
+    recs.innerHTML='';
+    if(!dev.length){
+      var li0=document.createElement('li');
+      li0.textContent='Отклонений от эталона нет: метрики по всем режимам соответствуют эталонным значениям. Обслуживание по регламенту.';
+      recs.appendChild(li0);
+    }else{
+      dev.forEach(function(d){
+        var li=document.createElement('li');
+        li.innerHTML='<b style="font-family:JetBrains Mono,monospace;color:'+(d.st===2?cssv('--bad-fg'):cssv('--warn-fg'))+'">'+d.p.code+'</b> — '+d.p.check;
+        recs.appendChild(li);
+      });
+      var li2=document.createElement('li');
+      li2.textContent='Автоматическое оповещение диспетчера: деградация видна до отказа — прогноз не менее чем за 20 дней до критического события.';
+      recs.appendChild(li2);
+    }
+  }
+  render();
+  window.addEventListener('themechange',render);
+})();
+
+/* ============ КЕЙС 02 · ЦИКЛЫ И АНОМАЛИИ ПОГРУЗКИ ============ */
+(function(){
+  'use strict';
+  var NS='http://www.w3.org/2000/svg';
+  var svg=document.getElementById('cycSvg');
+  if(!svg)return;
+  var scene=document.getElementById('cycScene');
+  var PL=162,PR=878,BAR_Y=12,BAR_H=14,BOT=316;
+  var LANES=[
+    {key:'azim',label:'АЗИМУТ ПЛАТФОРМЫ',y:70,h:46,mn:-1,mx:0.05,i:0},
+    {key:'incl',label:'ИНКЛИНОМЕТР СТРЕЛЫ',y:140,h:46,mn:-1.15,mx:1.15,i:1},
+    {key:'wt',  label:'ВЕС НА САМОСВАЛЕ',y:210,h:44,mn:0,mx:1.05,i:2},
+    {key:'sus', label:'ДАВЛЕНИЕ В ПОДВЕСКЕ',y:278,h:44,mn:0,mx:1.05,i:3}
+  ];
+  var PH=['ПОВОРОТ К ЗАБОЮ','НАБОР КОВША','ПОВОРОТ К САМОСВАЛУ','ВЫГРУЗКА ПОРОДЫ'];
+  var DUR=[1.0,0.62,1.0,0.5];
+  var CYC=3,bad=false,tt=0,playing=true,lastTs=null,raf=null,TL=null;
+
+  function mk(tag,attrs,cls){
+    var e=document.createElementNS(NS,tag);
+    for(var k in attrs)e.setAttribute(k,attrs[k]);
+    if(cls)e.setAttribute('class',cls);
+    return e;
+  }
+  function buildTL(){
+    var segs=[],tot=0,c,p,d;
+    for(c=0;c<CYC;c++){
+      for(p=0;p<4;p++){
+        d=DUR[p];
+        if(bad&&c===CYC-1&&p===2)d*=1.95;
+        if(bad&&c===CYC-1&&p===1)d*=1.35;
+        segs.push({c:c,p:p,t0:tot,t1:tot+d});tot+=d;
+      }
+    }
+    TL={segs:segs,total:tot};
+  }
+  function X(t){return PL+(PR-PL)*(t/TL.total);}
+  function segAt(t){var s=TL.segs,i;for(i=0;i<s.length;i++){if(t<s[i].t1)return s[i];}return s[s.length-1];}
+  function sigRaw(name,t){
+    var s=segAt(t),k=(t-s.t0)/(s.t1-s.t0),v=0;
+    if(name==='azim'){v=(s.p===0)?-k:(s.p===1?-1:(s.p===2?-1+k:0));}
+    else if(name==='incl'){
+      var amp=(s.p===1)?1:((s.p===3)?0.92:0.28);
+      v=Math.sin(2*Math.PI*t*1.35)*amp;
+      if(bad&&s.c===CYC-1){v+=0.34*Math.sin(t*23.7)+0.18*Math.sin(t*41.3);if(s.p===2)v*=0.5;}
+    }else if(name==='wt'){
+      v=(s.p===3)?k:((s.p===0)?(1-Math.min(1,k*2.4)):0);
+      if(bad&&s.c===CYC-1&&s.p===3)v=k*0.78;
+    }else{
+      var w=sigRaw('wt',t);
+      v=0.12+0.86*w+0.05*Math.sin(2*Math.PI*t*6.5);
+      if(bad&&s.c===CYC-1)v+=0.09*Math.sin(t*31.4);
+    }
+    return v;
+  }
+  function laneY(L,v){
+    var n=(v-L.mn)/(L.mx-L.mn);n=Math.max(0,Math.min(1,n));
+    return L.y+L.h*0.43-n*L.h*0.86;
+  }
+
+  var phRects=[],playLine,playDots=[];
+  function draw(){
+    scene.innerHTML='';phRects=[];playDots=[];
+    TL.segs.forEach(function(s){
+      var r=mk('rect',{x:X(s.t0).toFixed(1),y:BAR_Y,width:(X(s.t1)-X(s.t0)).toFixed(1),height:BAR_H,rx:2},'ph-bg phc'+s.p);
+      scene.appendChild(r);phRects.push(r);
+    });
+    LANES.forEach(function(L){
+      scene.appendChild(mk('rect',{x:PL,y:L.y-L.h/2,width:PR-PL,height:L.h,rx:6},'lane-bg'));
+      scene.appendChild(mk('line',{x1:PL,y1:L.y,x2:PR,y2:L.y},'lane-zero'));
+      var t=mk('text',{x:PL-10,y:L.y+3,'text-anchor':'end'},'lane-lbl');t.textContent=L.label;scene.appendChild(t);
+    });
+    for(var c=1;c<CYC;c++){
+      var xb=X(TL.segs[c*4].t0);
+      scene.appendChild(mk('line',{x1:xb,y1:BAR_Y,x2:xb,y2:BOT},'cyc-sep'));
+      var tl=mk('text',{x:xb+6,y:BOT+14},'cyc-lbl');tl.textContent='ЦИКЛ '+(c+1);scene.appendChild(tl);
+    }
+    var t0=mk('text',{x:PL+6,y:BOT+14},'cyc-lbl');t0.textContent='ЦИКЛ 1';scene.appendChild(t0);
+
+    var N=820,i,t;
+    LANES.forEach(function(L){
+      var d='M';
+      for(i=0;i<=N;i++){t=TL.total*i/N;d+=(i?'L':'')+X(t).toFixed(1)+' '+laneY(L,sigRaw(L.key,t)).toFixed(1);}
+      scene.appendChild(mk('path',{d:d},'sig sig'+L.i));
+    });
+
+    if(bad){
+      var s0=TL.segs[(CYC-1)*4+1],s1=TL.segs[(CYC-1)*4+2];
+      scene.appendChild(mk('rect',{x:X(s0.t0).toFixed(1),y:BAR_Y,width:(X(s1.t1)-X(s0.t0)).toFixed(1),height:BOT-BAR_Y,rx:4},'anom-zone'));
+      var al=mk('text',{x:((X(s0.t0)+X(s1.t1))/2).toFixed(1),y:BAR_Y+BAR_H+15,'text-anchor':'middle'},'anom-lbl');
+      al.textContent='НЕОБРАЗЦОВЫЙ ЦИКЛ: ВРЕМЯ ОПЕРАЦИЙ ВЫРОСЛО · КАРТИНА ИНКЛИНОМЕТРА НЕСТАБИЛЬНА';
+      scene.appendChild(al);
+    }else{
+      var rl=mk('text',{x:PL,y:BAR_Y+BAR_H+15},'rec-lbl');
+      rl.textContent='ОБРАЗЦОВЫЙ ЦИКЛ — 4 ПОВОРОТА · ПЕРИОДЫ СТАБИЛЬНЫ';
+      scene.appendChild(rl);
+    }
+    playLine=mk('line',{x1:PL,y1:BAR_Y,x2:PL,y2:BOT},'play-line');scene.appendChild(playLine);
+    LANES.forEach(function(L){
+      var c2=mk('circle',{cx:PL,cy:L.y,r:4},'play-dot');
+      scene.appendChild(c2);playDots.push(c2);
+    });
+  }
+
+  var outAz=document.getElementById('cycAz'),outPhase=document.getElementById('cycPhase'),
+      outTurn=document.getElementById('cycTurn'),outTime=document.getElementById('cycTime'),
+      outState=document.getElementById('cycState'),outRecLbl=document.getElementById('cycRec');
+
+  function clock(t){
+    var base=8*3600+3*60+30, s=Math.floor(base+t*12);
+    function p(n){return (n<10?'0':'')+n;}
+    return p(Math.floor(s/3600)%24)+':'+p(Math.floor(s/60)%60)+':'+p(s%60);
+  }
+  function update(){
+    var t=Math.max(0,Math.min(TL.total-0.0001,tt));
+    var s=segAt(t),x=X(t),si=TL.segs.indexOf(s);
+    playLine.setAttribute('x1',x);playLine.setAttribute('x2',x);
+    LANES.forEach(function(L,i){
+      playDots[i].setAttribute('cx',x);
+      playDots[i].setAttribute('cy',laneY(L,sigRaw(L.key,t)));
+    });
+    phRects.forEach(function(r,i){
+      var p=TL.segs[i].p;
+      r.setAttribute('class',(i===si?'ph-on':'ph-bg')+' phc'+p);
+    });
+    outAz.textContent=(-sigRaw('azim',t)*90).toFixed(1)+'°';
+    outPhase.textContent=PH[s.p];
+    outTurn.textContent=(s.p+1)+' / 4';
+    outTime.textContent=clock(t);
+    var isBad=bad&&s.c===CYC-1&&(s.p===1||s.p===2);
+    outState.textContent=isBad?'Аномалия цикла':'Периоды стабильны';
+    outState.className=isBad?'bad':'ok';
+    outRecLbl.textContent='REC | Эпизод 2124_ep_1 | 9 каналов · 20 Гц | '+(bad?'НЕОБРАЗЦОВЫЙ':'ОБРАЗЦОВЫЙ');
+  }
+
+  var playBtn=document.getElementById('cycPlay'),modeBtn=document.getElementById('cycMode');
+  function loop(ts){
+    if(!playing){raf=null;return;}
+    if(lastTs===null)lastTs=ts;
+    var dt=Math.min(64,ts-lastTs);lastTs=ts;
+    tt+=dt*(TL.total/21000);
+    if(tt>=TL.total){tt=TL.total-0.001;playing=false;playBtn.textContent='▶ Запуск';}
+    update();raf=requestAnimationFrame(loop);
+  }
+  function setPlay(on){
+    playing=on;playBtn.textContent=on?'❚❚ Пауза':'▶ Запуск';
+    if(on){lastTs=null;if(!raf)raf=requestAnimationFrame(loop);}
+  }
+  playBtn.addEventListener('click',function(){
+    if(!playing&&tt>=TL.total-0.01)tt=0;
+    setPlay(!playing);
+  });
+  document.getElementById('cycRestart').addEventListener('click',function(){tt=0;update();setPlay(true);});
+  modeBtn.addEventListener('click',function(){
+    bad=!bad;
+    modeBtn.textContent=bad?'Необразцовый':'Образцовый';
+    modeBtn.classList.toggle('act',bad);
+    buildTL();tt=Math.min(tt,TL.total-0.01);draw();update();
+  });
+  svg.addEventListener('click',function(e){
+    var r=svg.getBoundingClientRect();
+    var xs=(e.clientX-r.left)/r.width*900;
+    if(xs<PL||xs>PR)return;
+    tt=((xs-PL)/(PR-PL))*TL.total;update();
+  });
+  buildTL();draw();update();setPlay(true);
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){if(!e.isIntersecting&&playing)setPlay(false);});
+  },{threshold:.12}).observe(svg);
+})();
+
+/* ============ ГЕОНАВИГАЦИЯ ============ */
+(function(){
+  'use strict';
+  var NS='http://www.w3.org/2000/svg';
+  var svg=document.getElementById('geoSvg');
+  if(!svg)return;
+  var scene=document.getElementById('geoScene');
+  var X0=24,X1=896,TOPY=26,BOTY=396,FX=592,FD=74,FW=30,FC=FX+FW/2,XMIN=48,XMAX=886;
+
+  function fFault(x){if(x<=FX)return 0;if(x>=FX+FW)return FD;var t=(x-FX)/FW;return FD*(3*t*t-2*t*t*t);}
+  function bnd(x,base,amp,wl,ph){return base+amp*Math.sin(2*Math.PI*(x-ph)/wl)+fFault(x);}
+  function B1(x){return bnd(x,96,7,430,40);}
+  function B2(x){return bnd(x,158,8,380,190);}
+  function B3(x){return bnd(x,214,6,460,300);}
+  function B4(x){return bnd(x,300,8,520,120);}
+  function rc(x){return (B1(x)+B2(x))/2;}
+  function tmY(x){
+    if(x<210){var t=Math.max(0,Math.min(1,(x-46)/164)),s=t*t*(3-2*t);return 26+(rc(210)-8-26)*s;}
+    return rc(x)-8+5*Math.sin(2*Math.PI*(x-210)/250);
+  }
+  var XK=560,YK=tmY(560),SL=(tmY(560)-tmY(490))/70;
+  function tbY(x){return x<=XK?tmY(x):YK+SL*(x-XK);}
+  function uPeak(x){var d=(x-FC)/62;return Math.exp(-d*d/2);}
+
+  function mk(tag,attrs,cls){
+    var e=document.createElementNS(NS,tag);
+    for(var k in attrs)e.setAttribute(k,attrs[k]);
+    if(cls)e.setAttribute('class',cls);
+    return e;
+  }
+  function sample(f,a,b,n){var arr=[],i,x;for(i=0;i<=n;i++){x=a+(b-a)*i/n;arr.push([x,f(x)]);}return arr;}
+  function toD(arr){return 'M'+arr.map(function(p){return Math.round(p[0])+' '+Math.round(p[1]);}).join('L');}
+  function bandD(ft,fb){return toD(sample(ft,X0,X1,72).concat(sample(fb,X0,X1,72).reverse()))+'Z';}
+
+  scene.appendChild(mk('rect',{x:X0,y:TOPY,width:X1-X0,height:BOTY-TOPY},'plot-bg'));
+
+  var LAYERS=[
+    {t:function(){return TOPY;},b:B1,cls:'lyr-seal',name:'ПЛОТНАЯ ПОРОДА-ПОКРЫШКА',lc:''},
+    {t:B1,b:B2,cls:'lyr-res',name:'ЦЕЛЕВОЙ КОЛЛЕКТОР · SWEET SPOT',lc:'hot'},
+    {t:B2,b:B3,cls:'lyr-alev',name:'АЛЕВРОЛИТ',lc:''},
+    {t:B3,b:B4,cls:'lyr-clay',name:'ГЛИНА',lc:''},
+    {t:B4,b:function(){return BOTY;},cls:'lyr-water',name:'ВОДОНОСНЫЙ ГОРИЗОНТ',lc:'cy'}
+  ];
+  LAYERS.forEach(function(L){scene.appendChild(mk('path',{d:bandD(L.t,L.b)},L.cls));});
+  [B1,B2,B3,B4].forEach(function(f){scene.appendChild(mk('path',{d:toD(sample(f,X0,X1,72))},'lyr-line'));});
+  function layerLabel(f,txt,x,lc){var t=mk('text',{x:x,y:Math.round(f(x))+3},'gl '+(lc||''));t.textContent=txt;scene.appendChild(t);}
+  LAYERS.forEach(function(L,i){
+    var f=(i===0)?function(x){return (TOPY+B1(x))/2;}:(i===1?rc:(i===2?function(x){return (B2(x)+B3(x))/2;}:(i===3?function(x){return (B3(x)+B4(x))/2;}:function(x){return (B4(x)+BOTY)/2;})));
+    layerLabel(f,L.name,60,L.lc);
+  });
+  layerLabel(rc,'КОЛЛЕКТОР СМЕЩЁН РАЗЛОМОМ ↓',700,'hot');
+
+  var zfX=FX-58,zfW=FW+150;
+  scene.appendChild(mk('rect',{x:zfX,y:TOPY,width:zfW,height:BOTY-TOPY,fill:'url(#hatchRed)'}));
+  var zt=mk('text',{x:Math.round(zfX+zfW/2),y:TOPY+16,'text-anchor':'middle'},'gl rd');
+  zt.textContent='КРАСНЫЙ ФЛАГ · ЗОНА ТЕКТОНИЧЕСКОГО НАРУШЕНИЯ';scene.appendChild(zt);
+  scene.appendChild(mk('line',{x1:FC,y1:TOPY,x2:FC,y2:BOTY},'gfault'));
+  var fa=mk('text',{x:FC+8,y:BOTY-8},'gl rd');fa.textContent='РАЗЛОМ · СМЕЩЕНИЕ ПЛАСТОВ';scene.appendChild(fa);
+  scene.appendChild(mk('path',{d:'M'+(FC-14)+' '+(TOPY+40)+'l14 10l-14 10',fill:'none','stroke-width':1.6},'gfault'));
+
+  scene.appendChild(mk('path',{d:toD(sample(tbY,X0,X1,90))},'gbase'));
+  var bx=830,by=tbY(830);
+  scene.appendChild(mk('path',{d:'M'+(bx-7)+' '+(by-7)+'L'+(bx+7)+' '+(by+7)+'M'+(bx+7)+' '+(by-7)+'L'+(bx-7)+' '+(by+7)},'gx-mark'));
+  var bt=mk('text',{x:bx-14,y:by-16,'text-anchor':'end'},'gl rd');
+  bt.textContent='БЕЗ МОДЕЛИ: УХОД ИЗ КОЛЛЕКТОРА В ПОКРЫШКУ';scene.appendChild(bt);
+
+  scene.appendChild(mk('path',{d:toD(sample(tmY,X0,X1,90))},'gmodel-glow'));
+  scene.appendChild(mk('path',{d:toD(sample(tmY,X0,X1,90))},'gmodel'));
+
+  var cone=mk('path',{d:'',fill:'url(#coneGrad)',stroke:'none'});scene.appendChild(cone);
+  var bit=mk('g',{});
+  bit.appendChild(mk('circle',{r:12},'bit-ring'));
+  bit.appendChild(mk('circle',{r:6},'bit-core'));
+  var bitTxt=mk('text',{x:0,y:-20,'text-anchor':'middle'},'gl cy');bitTxt.textContent='ЗАБОЙ';
+  bit.appendChild(bitTxt);scene.appendChild(bit);
+
+  var outPos=document.getElementById('gPos'),outConf=document.getElementById('gConf'),
+      outInt=document.getElementById('gInt'),outWhere=document.getElementById('gWhere'),
+      outBar=document.getElementById('gBar'),outStatus=document.getElementById('gStatus'),
+      outRec=document.getElementById('gRec');
+
+  function buildCone(x){
+    var u=uPeak(x),ahead=170,steps=30,up=[],dn=[],i,t,xx,yy,w,sl,nr;
+    for(i=0;i<=steps;i++){
+      t=i/steps;xx=Math.min(X1-4,x+ahead*t);yy=tmY(xx);
+      w=(3+58*u)*Math.pow(t,1.25)+1.5;
+      sl=(tmY(Math.min(X1,xx+2))-tmY(Math.max(X0,xx-2)))/4;
+      nr=1/Math.sqrt(1+sl*sl);
+      up.push([xx-sl*nr*w,yy+nr*w]);dn.push([xx+sl*nr*w,yy-nr*w]);
+    }
+    cone.setAttribute('d',toD(up.concat(dn.reverse()))+'Z');
+    cone.setAttribute('fill',u>0.5?'url(#coneGradHot)':'url(#coneGrad)');
+  }
+  function update(x){
+    x=Math.max(XMIN,Math.min(XMAX,x));
+    var y=tmY(x),u=uPeak(x);
+    bit.setAttribute('transform','translate('+x.toFixed(1)+','+y.toFixed(1)+')');
+    buildCone(x);
+    outPos.textContent=Math.round((x-XMIN)/(XMAX-XMIN)*100)+' %';
+    outConf.textContent=Math.round(95-40*u)+' %';
+    outInt.textContent=u<0.16?'узкий':(u<0.5?'расширяется':'широкий · прогноз ненадёжен');
+    outWhere.textContent=(y>B1(x)&&y<B2(x))?'в центре коллектора':'вне целевого интервала';
+    outBar.style.width=Math.round(12+88*u)+'%';
+    outStatus.className='badge '+(u<0.16?'ok':(u<0.55?'warn':'danger'));
+    outStatus.textContent=u<0.16?'Прогноз надёжен · управление автоматике':
+      (u<0.55?'Повышенная неопределённость · контроль геолога':'Красный флаг · требуется ручная верификация');
+    outRec.textContent=x<FX-70?'Удерживать траекторию в центре наиболее проницаемой части коллектора.':
+      (x<FX+FW+40?'Пласт смещён разломом — опускать траекторию; данные каротажа противоречивы, решение верифицирует геолог-навигатор.':
+      'Удерживать ствол в sweet spot после прохождения зоны нарушения.');
+    syncSparks(x);
+  }
+
+  function rndGen(seed){var r=seed;return function(){r=(r*9301+49297)%233280;return r/233280;};}
+  function sparkVals(seed,n,artifact){
+    var rr=rndGen(seed),v=0.5,out=[],i;
+    for(i=0;i<n;i++){v=0.55*v+0.45*rr();out.push(v);}
+    var sm=[];
+    for(i=0;i<n;i++){var a=out.slice(Math.max(0,i-2),i+3),s=0,k;for(k=0;k<a.length;k++)s+=a[k];sm.push(s/a.length);}
+    if(artifact){var c=Math.round(artifact*n);for(i=c-3;i<=c+3;i++){if(i>=0&&i<n)sm[i]=(i%2===0)?0.98:0.06;}}
+    return sm;
+  }
+  function sparkD(vals,w,h){
+    var n=vals.length;
+    return 'M'+vals.map(function(v,i){return Math.round(i/(n-1)*w)+' '+Math.round(h-v*h*0.86-h*0.07);}).join('L');
+  }
+  var SPARKS=[
+    {t:'Гамма-каротаж (ГК)',seed:7,art:0.66,cls:'sp1'},
+    {t:'Электрическое сопротивление',seed:23,art:0.67,cls:'sp2'},
+    {t:'Плотность',seed:91,art:0.65,cls:'sp3'}
+  ];
+  var sparkBox=document.getElementById('geoSparks'),scanLines=[];
+  SPARKS.forEach(function(s){
+    var box=document.createElement('div');box.className='spark';
+    box.innerHTML='<div class="sh">'+s.t+'</div>';
+    var sv=mk('svg',{viewBox:'0 0 240 44',preserveAspectRatio:'none'});
+    var zx=(FC-XMIN)/(XMAX-XMIN)*240;
+    sv.appendChild(mk('rect',{x:Math.round(zx-14),y:0,width:34,height:44},'spark-zone'));
+    sv.appendChild(mk('path',{d:sparkD(sparkVals(s.seed,90,s.art),240,44),fill:'none'},'sig '+s.cls));
+    var scan=mk('line',{x1:0,y1:0,x2:0,y2:44},'spark-scan');
+    sv.appendChild(scan);scanLines.push(scan);
+    box.appendChild(sv);sparkBox.appendChild(box);
+  });
+  function syncSparks(x){
+    var sx=((x-XMIN)/(XMAX-XMIN))*240;
+    scanLines.forEach(function(l){l.setAttribute('x1',sx);l.setAttribute('x2',sx);});
+  }
+
+  var slider=document.getElementById('geoSlider'),playBtn=document.getElementById('geoPlay');
+  var playId=null,playing=false;
+  function fromSlider(){update(XMIN+(XMAX-XMIN)*(slider.value/1000));}
+  slider.addEventListener('input',function(){stopPlay();fromSlider();});
+  function stopPlay(){if(playId){cancelAnimationFrame(playId);playId=null;}playing=false;playBtn.textContent='▶ Проход по стволу';}
+  playBtn.addEventListener('click',function(){
+    if(playing){stopPlay();return;}
+    playing=true;playBtn.textContent='❚❚ Пауза';
+    var x=XMIN,last=null;
+    function frame(ts){
+      if(!playing)return;
+      if(last===null)last=ts;
+      var dt=Math.min(60,ts-last);last=ts;
+      x+=(Math.abs(x-FC)<80?0.035:0.11)*dt;
+      if(x>=XMAX){x=XMAX;update(x);slider.value=1000;stopPlay();return;}
+      update(x);slider.value=Math.round((x-XMIN)/(XMAX-XMIN)*1000);
+      playId=requestAnimationFrame(frame);
+    }
+    playId=requestAnimationFrame(frame);
+  });
+  document.getElementById('geoReset').addEventListener('click',function(){stopPlay();slider.value=180;fromSlider();});
+  update(XMIN+(XMAX-XMIN)*0.18);
+})();
+
+/* ============ ЗАВАЛЫ НА РЕКАХ ============ */
+(function(){
+  'use strict';
+  var SVGNS='http://www.w3.org/2000/svg';
+  var JAM=[
+    {id:'DJI_0001.JPG',lat:46.7723,lon:142.4948,alt:32.8,x:325.8,y:528.0,next:'144 м',frame:'кадр 1 из маршрута'},
+    {id:'DJI_0002.JPG',lat:46.7733,lon:142.4960,alt:56.8,x:367.0,y:477.9,next:'194 м',frame:'кадр 2 из маршрута'},
+    {id:'DJI_0007.JPG',lat:46.7750,lon:142.4966,alt:57.0,x:387.6,y:392.7,next:'967 м',frame:'кадр 7 из маршрута'},
+    {id:'DJI_0018.JPG',lat:46.7814,lon:142.4880,alt:87.8,x:92.4, y:72.0, next:'472 м',frame:'кадр 18 из маршрута'},
+    {id:'DJI_0019.JPG',lat:46.7792,lon:142.4933,alt:116.9,x:274.3,y:182.2,next:'—',    frame:'кадр 19 из маршрута'}
+  ];
+  var CLS_KEY='sac_jam_cls',SEL_KEY='sac_jam_sel';
+  var savedCls=(function(){try{return JSON.parse(localStorage.getItem(CLS_KEY)||'{}');}catch(e){return {};}})();
+  var defaults={0:'water',1:'water',2:'shoal',3:'shoal',4:'water'};
+  JAM.forEach(function(p,i){p.cls=savedCls[p.id]||defaults[i];});
+
+  var gMark=document.getElementById('jamMarkers'),tbody=document.getElementById('jamTable');
+  var selected=0;
+  try{var sv=parseInt(localStorage.getItem(SEL_KEY),10);if(sv>=0&&sv<JAM.length)selected=sv;}catch(e){}
+
+  var nodes=[];
+  JAM.forEach(function(p,i){
+    var g=document.createElementNS(SVGNS,'g');
+    g.setAttribute('class','jm '+p.cls);g.setAttribute('transform','translate('+p.x+','+p.y+')');
+    var pulse=document.createElementNS(SVGNS,'circle');pulse.setAttribute('class','pulse');pulse.setAttribute('r',7);
+    var halo=document.createElementNS(SVGNS,'circle');halo.setAttribute('class','halo');halo.setAttribute('r',11);
+    var core=document.createElementNS(SVGNS,'circle');core.setAttribute('class','core');core.setAttribute('r',4.8);
+    var label=document.createElementNS(SVGNS,'text');
+    var rightSide=p.x<300;
+    label.setAttribute('x',rightSide?17:-17);label.setAttribute('y',4);
+    label.setAttribute('text-anchor',rightSide?'start':'end');
+    label.textContent=p.id.replace('DJI_','').replace('.JPG','');
+    g.appendChild(pulse);g.appendChild(halo);g.appendChild(core);g.appendChild(label);
+    g.addEventListener('click',function(){select(i);});
+    gMark.appendChild(g);nodes.push(g);
+  });
+  JAM.forEach(function(p,i){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td><span class="clsdot '+p.cls+'"></span>'+p.id+'</td><td>'+p.lat.toFixed(4).replace('.',',')+'°</td><td>'+p.lon.toFixed(4).replace('.',',')+'°</td><td>'+p.alt.toFixed(1).replace('.',',')+'</td><td>'+p.next+'</td>';
+    tr.addEventListener('click',function(){select(i);});
+    tbody.appendChild(tr);
+  });
+  var crossV=document.getElementById('crossV'),crossH=document.getElementById('crossH');
+  var crossLon=document.getElementById('crossLon'),crossLat=document.getElementById('crossLat');
+  function counts(){
+    var w=0,s=0;JAM.forEach(function(p){p.cls==='water'?w++:s++;});
+    document.getElementById('chipWater').textContent=w;
+    document.getElementById('chipShoal').textContent=s;
+  }
+  function select(i){
+    selected=i;var p=JAM[i];
+    try{localStorage.setItem(SEL_KEY,String(i));}catch(e){}
+    nodes.forEach(function(n,k){
+      n.setAttribute('class','jm '+JAM[k].cls+(k===i?' sel':''));
+      n.querySelector('text').textContent=(k===i)?JAM[k].id:JAM[k].id.replace('DJI_','').replace('.JPG','');
+    });
+    Array.prototype.forEach.call(tbody.children,function(tr,k){
+      tr.classList.toggle('sel',k===i);
+      var dot=tr.querySelector('.clsdot');if(dot)dot.className='clsdot '+JAM[k].cls;
+    });
+    document.getElementById('jamTitle').textContent=p.id;
+    document.getElementById('pLat').textContent=p.lat.toFixed(4).replace('.',',')+'°';
+    document.getElementById('pLon').textContent=p.lon.toFixed(4).replace('.',',')+'°';
+    document.getElementById('pAlt').textContent=p.alt.toFixed(1).replace('.',',')+' м';
+    document.getElementById('pNext').textContent=p.next;
+    document.getElementById('pFrame').textContent=p.frame;
+    document.getElementById('jamPos').textContent=(i+1)+' / '+JAM.length;
+    crossV.setAttribute('x1',p.x);crossV.setAttribute('x2',p.x);crossV.setAttribute('y1',p.y);crossV.setAttribute('y2',576);
+    crossH.setAttribute('y1',p.y);crossH.setAttribute('y2',p.y);crossH.setAttribute('x2',p.x);
+    crossLon.setAttribute('x',p.x);crossLon.setAttribute('text-anchor','middle');
+    crossLon.textContent='Долгота '+p.lon.toFixed(4).replace('.',',')+'°';
+    crossLat.setAttribute('y',p.y-6);
+    crossLat.textContent='Широта '+p.lat.toFixed(4).replace('.',',')+'°';
+    document.querySelectorAll('.cls-toggle button').forEach(function(b){
+      b.classList.toggle('on',b.getAttribute('data-cls')===p.cls);
+    });
+    counts();
+  }
+  document.getElementById('jamPrev').addEventListener('click',function(){select((selected-1+JAM.length)%JAM.length);});
+  document.getElementById('jamNext').addEventListener('click',function(){select((selected+1)%JAM.length);});
+  document.querySelectorAll('.cls-toggle button').forEach(function(b){
+    b.addEventListener('click',function(){
+      var cls=b.getAttribute('data-cls'),p=JAM[selected];
+      p.cls=cls;
+      try{var m=JSON.parse(localStorage.getItem(CLS_KEY)||'{}');m[p.id]=cls;localStorage.setItem(CLS_KEY,JSON.stringify(m));}catch(e){}
+      select(selected);
+    });
+  });
+  document.addEventListener('keydown',function(e){
+    if(document.body.classList.contains('lb-open'))return;
+    if(e.target&&(e.target.isContentEditable||/input|textarea|button|select/i.test(e.target.tagName)))return;
+    var map=document.getElementById('jamMap');if(!map)return;
+    var r=map.getBoundingClientRect();
+    if(r.bottom<0||r.top>window.innerHeight)return;
+    if(e.key==='ArrowRight'){select((selected+1)%JAM.length);}
+    if(e.key==='ArrowLeft'){select((selected-1+JAM.length)%JAM.length);}
+  });
+  select(selected);
+})();
+</script>
+<script src="site.js"></script>
+</body>
+</html>

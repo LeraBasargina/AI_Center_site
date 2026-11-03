@@ -1,0 +1,4 @@
+# Large source videos are distributed separately with the deployment bundle.
+media/*.mp4
+node_modules/
+.DS_Store
