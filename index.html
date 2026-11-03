@@ -1147,7 +1147,7 @@ footer .f4{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacin
         <div class="card">
           <div class="lbl">Сегментация — YOLO SEGMENTATION</div>
           <h3>Контур завала маской — точная площадь и границы объекта</h3>
-          <div class="media-slot" data-id="segment" data-src="media/segment.mp4" data-hint="segment · GIF · видео"></div>
+          <div class="media-slot" data-id="segment" data-src="media/optimized/segment.mp4" data-hint="segment · GIF · видео"></div>
         </div>
       </div>
     </div>
@@ -1155,7 +1155,7 @@ footer .f4{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacin
 </section>
 
 <!-- ============ 04 · ДЕФЕКТЫ ============ -->
-<section id="media-gallery" class="extra-media"><div class="wrap"><div class="section-label">КОМПЬЮТЕРНОЕ ЗРЕНИЕ / МАТЕРИАЛЫ ПРОЕКТА</div><div class="shead"><h2>Детали, которые видит модель</h2></div><p class="ssub">Дополнительные материалы: сегментация объектов и обнаружение завалов на видеозаписи.</p><div class="grid2"><div class="card"><h3>Сегментация объектов</h3><div class="media-slot" data-id="seg-photo" data-src="media/seg.jpg" data-hint="Сегментация завалов на снимке реки"></div></div><div class="card"><h3>Обнаружение объектов в видео</h3><div class="media-slot" data-id="bbox-video" data-src="media/b-boxes.mp4" data-hint="Обнаружение завалов на видеозаписи"></div></div></div></div></section>
+<section id="media-gallery" class="extra-media"><div class="wrap"><div class="section-label">КОМПЬЮТЕРНОЕ ЗРЕНИЕ / МАТЕРИАЛЫ ПРОЕКТА</div><div class="shead"><h2>Детали, которые видит модель</h2></div><p class="ssub">Дополнительные материалы: сегментация объектов и обнаружение завалов на видеозаписи.</p><div class="grid2"><div class="card"><h3>Сегментация объектов</h3><div class="media-slot" data-id="seg-photo" data-src="media/seg.jpg" data-hint="Сегментация завалов на снимке реки"></div></div><div class="card"><h3>Обнаружение объектов в видео</h3><div class="media-slot" data-id="bbox-video" data-src="media/optimized/b-boxes.mp4" data-hint="Обнаружение завалов на видеозаписи"></div></div></div></div></section>
 <section id="detect" style="padding-top:0">
   <div class="wrap">
     <div class="shead rv"><span class="snum">04</span><h2>Автоматическое выявление дефектов</h2></div>
@@ -1187,7 +1187,7 @@ footer .f4{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacin
           <li>Колея</li>
           <li>Наклон опоры освещения</li>
         </ul>
-        <div class="media-slot" data-id="road" data-src="media/road.mp4" data-hint="Фото / GIF: дефекты дорог"></div>
+        <div class="media-slot" data-id="road" data-src="media/optimized/road.mp4" data-hint="Фото / GIF: дефекты дорог"></div>
       </div>
     </div>
   </div>
@@ -1416,7 +1416,7 @@ var MEDIA_SOURCES = {
       mediaBox.innerHTML='';
       var node;
       if(type.indexOf('video')===0){
-        node=document.createElement('video');node.src=src;node.controls=true;node.muted=true;node.loop=true;node.autoplay=false;node.preload="metadata";
+        node=document.createElement('video');node.src=src;node.controls=true;node.muted=true;node.loop=true;node.autoplay=false;node.preload="none";
         node.setAttribute('playsinline','');node.setAttribute('muted','');
       }else{
         node=document.createElement('img');node.src=src;node.alt=hint;node.loading='lazy';
